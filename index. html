@@ -1,0 +1,8 @@
+your-username.github.io/
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── main.js
+└── images/
+    └── (存放你的图片)
