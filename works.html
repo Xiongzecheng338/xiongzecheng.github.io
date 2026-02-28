@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集 | 熊泽城</title>
+    <meta name="description" content="熊泽城的技术项目与开源作品集">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== 全局变量 ========== */
+        :root {
+            /* 蓝白主题 */
+            --bg-light: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            --text-light-primary: #1565c0;
+            --text-light-secondary: #1976d2;
+            --accent-light: #00bcd4;
+            --glow-light: rgba(0, 188, 212, 0.6);
+            --card-light: rgba(255, 255, 255, 0.9);
+
+            /* 黑色主题 */
+            --bg-dark: #0a0e27;
+            --text-dark-primary: #e6f1ff;
+            --text-dark-secondary: #8892b0;
+            --accent-dark: #64ffda;
+            --glow-dark: rgba(100, 255, 218, 0.4);
+            --card-dark: rgba(17, 34, 64, 0.9);
+
+            /* 当前主题 */
+            --current-bg: var(--bg-light);
+            --current-text: var(--text-light-primary);
+            --current-text-sec: var(--text-light-secondary);
+            --current-accent: var(--accent-light);
+            --current-glow: var(--glow-light);
+            --current-card: var(--card-light);
+
+            transition: all 0.5s ease;
+        }
+
+        body.dark-mode {
+            --current-bg: var(--bg-dark);
+            --current-text: var(--text-dark-primary);
+            --current-text-sec: var(--text-dark-secondary);
+            --current-accent: var(--accent-dark);
+            --current-glow: var(--glow-dark);
+            --current-card: var(--card-dark);
+        }
+
+        /* ========== 基础重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--current-bg);
+            color: var(--current-text);
+            overflow-x: hidden;
+            transition: all 0.8s ease;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--current-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--current-accent);
+            border-radius: 4px;
+        }
+
+        /* ========== 星空背景 ========== */
+        #bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: starTwinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), var(--current-accent));
+            transform: rotate(-45deg);
+            animation: meteorFall 1.5s linear infinite;
+            filter: drop-shadow(0 0 6px var(--current-accent));
+        }
+
+        @keyframes meteorFall {
+            0% { transform: translateX(100vw) translateY(-100vh) rotate(-45deg); opacity: 1; }
+            100% { transform: translateX(-100vw) translateY(100vh) rotate(-45deg); opacity: 0; }
+        }
+
+        /* ========== 导航栏 ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+            background: transparent;
+        }
+
+        nav:hover, nav.scrolled {
+            background: var(--current-card);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-logo {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            animation: logoSpin 20s linear infinite;
+        }
+
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nav-logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 10px var(--current-accent));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--current-text-sec);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--current-accent);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid var(--current-accent);
+            color: var(--current-accent);
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            background: rgba(0, 188, 212, 0.3);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid var(--current-accent);
+            transition: all 0.5s ease;
+        }
+
+        .theme-toggle-ball {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            transition: all 0.5s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        body.dark-mode .theme-toggle-ball {
+            left: calc(100% - 26px);
+            background: #1a1a2e;
+        }
+
+        /* ========== 第一屏：标题区 ========== */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--current-accent), var(--current-text), var(--current-accent));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 3s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(18px, 3vw, 24px);
+            color: var(--current-text-sec);
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+
+        .hero-desc {
+            max-width: 700px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--current-text-sec);
+            margin-bottom: 50px;
+        }
+
+        /* 社交链接（含知乎） */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .social-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 30px;
+            background: var(--current-card);
+            border: 2px solid var(--current-accent);
+            border-radius: 30px;
+            color: var(--current-accent);
+            text-decoration: none;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-btn:hover {
+            background: var(--current-accent);
+            color: #0a0e27;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--current-glow);
+        }
+
+        .social-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .social-btn:hover .social-tooltip {
+            opacity: 1;
+            bottom: -40px;
+        }
+
+        /* 向下滚动指示 */
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .scroll-indicator span {
+            font-size: 13px;
+            color: var(--current-text-sec);
+            letter-spacing: 2px;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--current-accent);
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .scroll-arrow::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--current-accent);
+            border-radius: 50%;
+            animation: scrollBall 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollBall {
+            0% { top: 8px; opacity: 1; }
+            100% { top: 32px; opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== 内容区通用样式 ========== */
+        .section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--current-accent);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 700;
+            color: var(--current-text);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--current-accent);
+            border-radius: 2px;
+        }
+
+        /* 动画类 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ========== 项目展示区 ========== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--current-card);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--current-accent);
+            box-shadow: 0 25px 60px var(--current-glow);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transition: all 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            top: 100%;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--current-accent), var(--current-text-sec));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 30px var(--current-glow);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--current-text-sec);
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--current-accent);
+            color: #0a0e27;
+            transform: scale(1.1);
+        }
+
+        .project-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            color: var(--current-text);
+            margin-bottom: 10px;
+        }
+
+        .project-desc {
+            color: var(--current-text-sec);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            padding: 4px 12px;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid var(--current-accent);
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--current-accent);
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--current-text-sec);
+        }
+
+        .project-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-stat strong {
+            color: var(--current-accent);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* ========== 文章展示区 ========== */
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .article-card {
+            background: var(--current-card);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .article-card:hover {
+            transform: translateX(10px);
+            border-color: var(--current-accent);
+            box-shadow: 0 20px 50px var(--current-glow);
+        }
+
+        .article-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .article-platform {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(100, 255, 218, 0.15);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--current-accent);
+            margin-bottom: 10px;
+        }
+
+        .article-title {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 20px;
+            color: var(--current-text);
+            margin-bottom: 8px;
+        }
+
+        .article-desc {
+            font-size: 14px;
+            color: var(--current-text-sec);
+            line-height: 1.6;
+        }
+
+        .article-date {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            color: var(--current-accent);
+            white-space: nowrap;
+        }
+
+        /* ========== 结尾区 ========== */
+        .ending-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .ending-animation {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .ending-circle {
+            position: absolute;
+            border: 2px solid var(--current-accent);
+            border-radius: 50%;
+            animation: circleExpand 2s ease-in-out infinite;
+        }
+
+        .ending-circle:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .ending-circle:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0.3s;
+        }
+
+        .ending-circle:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes circleExpand {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .ending-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .ending-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            color: var(--current-text);
+            margin-bottom: 20px;
+        }
+
+        .ending-text p {
+            font-size: 18px;
+            color: var(--current-text-sec);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--current-card);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .article-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景 -->
+    <div id="bg-container"></div>
+
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="nav-logo" onclick="window.location.href='index.html'">
+            <svg viewBox="0 0 100 100">
+                <polygon points="50,10 61,35 90,35 67,55 78,90 50,70 22,90 33,55 10,35 39,35"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         style="color: var(--current-accent)">
+                </polygon>
+            </svg>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle">☰</button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="resume.html">简历</a></li>
+            <li><a href="works.html" class="active">作品集</a></li>
+            <li><a href="tools.html">工具站</a></li>
+            <li><a href="contact.html">联系方式</a></li>
+            <li>
+                <div class="theme-toggle" id="themeToggle">
+                    <div class="theme-toggle-ball"></div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 第一屏：标题区 -->
+    <section class="hero-section">
+        <h1 class="hero-title fade-in">作品集</h1>
+        <p class="hero-subtitle fade-in">PROJECTS & ARTICLES</p>
+        <p class="hero-desc fade-in">
+            这里展示了我的开源项目、技术文章和学习笔记，涵盖前端、后端、数据分析等多个方向。
+            每一个项目都是一次对技术的深入探索，每一篇文章都是一次思考的沉淀。
+        </p>
+
+        <!-- 社交链接（含知乎） -->
+        <div class="social-links fade-in">
+            <a href="https://github.com/badhope" target="_blank" class="social-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+                <span class="social-tooltip">查看我的开源项目</span>
+            </a>
+
+            <a href="https://blog.csdn.net/weixin_56622231" target="_blank" class="social-btn">
+                <span style="font-size: 18px;">📝</span>
+                CSDN 博客
+                <span class="social-tooltip">阅读我的技术文章</span>
+            </a>
+
+            <a href="https://juejin.cn/" target="_blank" class="social-btn">
+                <span style="font-size: 18px;">💎</span>
+                掘金社区
+                <span class="social-tooltip">查看我的技术分享</span>
+            </a>
+
+            <a href="https://www.zhihu.com/people/badhope" target="_blank" class="social-btn">
+                <span style="font-size: 18px;">📖</span>
+                知乎主页
+                <span class="social-tooltip">查看我的知乎动态</span>
+            </a>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>向下滚动探索作品</span>
+            <div class="scroll-arrow" onclick="document.querySelector('.section').scrollIntoView({behavior: 'smooth'})"></div>
+        </div>
+    </section>
+
+    <!-- 第二屏：开源项目 -->
+    <section class="section" id="projects">
+        <div class="section-header fade-in">
+            <p class="section-number">01 / 03</p>
+            <h2 class="section-title">开源项目</h2>
+        </div>
+
+        <div class="projects-grid">
+            <!-- 项目示例 1 -->
+            <a href="https://badhope.github.io/Mibt-Test/" target="_blank" class="project-card scale-in">
+                <div class="project-header">
+                    <div class="project-icon">🧠</div>
+                    <div class="project-links">
+                        <div class="project-link" title="在线演示">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </div>
+                        <div class="project-link" title="GitHub 源码">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="project-title">MIBT 专业人格评测系统</h3>
+                <p class="project-desc">
+                    基于 HTML/CSS/JavaScript 开发的心理学测评网站，用户可以通过完成测评获取多维度人格分析。
+                    项目采用静态页面部署在 GitHub Pages，支持多种题型和自动评分逻辑。
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">HTML5</span>
+                    <span class="project-tag">CSS3</span>
+                    <span class="project-tag">JavaScript</span>
+                    <span class="project-tag">心理学测评</span>
+                </div>
+                <div class="project-stats">
+                    <span class="project-stat">
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        <strong>0</strong> Stars
+                    </span>
+                    <span class="project-stat">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <strong>0</strong> Issues
+                    </span>
+                </div>
+            </a>
+
+            <!-- 项目示例 2 -->
+            <a href="https://github.com/badhope" target="_blank" class="project-card scale-in">
+                <div class="project-header">
+                    <div class="project-icon">🌐</div>
+                    <div class="project-links">
+                        <div class="project-link" title="GitHub 源码">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="project-title">个人开源项目集合</h3>
+                <p class="project-desc">
+                    在 GitHub 上维护了多个开源项目，涵盖工具库、学习示例、课程作业等。
+                    通过这些项目实践了 Git 工作流、代码规范和持续集成。
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Git</span>
+                    <span class="project-tag">GitHub</span>
+                    <span class="project-tag">开源项目</span>
+                    <span class="project-tag">工具库</span>
+                </div>
+                <div class="project-stats">
+                    <span class="project-stat">
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <strong>多个</strong> 仓库
+                    </span>
+                </div>
+            </a>
+
+            <!-- 项目示例 3 -->
+            <div class="project-card scale-in">
+                <div class="project-header">
+                    <div class="project-icon">📊</div>
+                </div>
+                <h3 class="project-title">数据分析实习项目</h3>
+                <p class="project-desc">
+                    在医药公司实习期间，使用 Python Pandas 对业务数据进行清洗、统计与可视化，
+                    累计处理 5000+ 条数据，输出 6 份多维度分析报表，优化了数据展示流程。
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">Pandas</span>
+                    <span class="project-tag">数据分析</span>
+                    <span class="project-tag">Excel</span>
+                </div>
+                <div class="project-stats">
+                    <span class="project-stat">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                        <strong>5000+</strong> 条数据
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三屏：技术文章 -->
+    <section class="section" id="articles">
+        <div class="section-header fade-in">
+            <p class="section-number">02 / 03</p>
+            <h2 class="section-title">技术文章</h2>
+        </div>
+
+        <div class="articles-list">
+            <a href="https://blog.csdn.net/weixin_56622231" target="_blank" class="article-card slide-right">
+                <div class="article-info">
+                    <div class="article-platform">
+                        <span>📝</span>
+                        <span>CSDN</span>
+                    </div>
+                    <h3 class="article-title">数据清洗与标准化流程实践心得</h3>
+                    <p class="article-desc">分享在医药公司实习期间处理 5000+ 条数据的实战经验，包括数据清洗、异常值处理和标准化流程。</p>
+                </div>
+                <div class="article-date">2026-01-15</div>
+            </a>
+
+            <a href="https://juejin.cn/" target="_blank" class="article-card slide-left">
+                <div class="article-info">
+                    <div class="article-platform">
+                        <span>💎</span>
+                        <span>掘金</span>
+                    </div>
+                    <h3 class="article-title">Python Pandas 在业务报表中的应用</h3>
+                    <p class="article-desc">如何利用 Pandas 优化数据展示逻辑，输出多维可视化报表，提升数据分析效率。</p>
+                </div>
+                <div class="article-date">2025-12-20</div>
+            </a>
+
+            <a href="https://blog.csdn.net/weixin_56622231" target="_blank" class="article-card slide-right">
+                <div class="article-info">
+                    <div class="article-platform">
+                        <span>📝</span>
+                        <span>CSDN</span>
+                    </div>
+                    <h3 class="article-title">实习期间的前端实践：官网维护与优化</h3>
+                    <p class="article-desc">记录参与公司官网日常内容更新、页面维护和功能模块优化的经验与踩坑。</p>
+                </div>
+                <div class="article-date">2025-11-10</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 第四屏：结尾 -->
+    <section class="ending-section" id="ending">
+        <div class="ending-animation">
+            <div class="ending-circle"></div>
+            <div class="ending-circle"></div>
+            <div class="ending-circle"></div>
+            <div class="ending-icon">📚</div>
+        </div>
+
+        <div class="ending-text fade-in">
+            <h2>持续学习，持续创作</h2>
+            <p>
+                每一个项目都是一次成长，每一篇文章都是一次总结。
+                我会继续在 GitHub 和技术社区分享自己的学习与实践，期待与你交流。
+            </p>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // ========== 1. 主题切换 ==========
+        const themeToggle = document.getElementById('themeToggle');
+
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // ========== 2. 创建背景 ==========
+        function createBackground() {
+            const container = document.getElementById('bg-container');
+
+            // 创建星星
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+
+            // 创建流星
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createMeteor(container), i * 3000);
+            }
+        }
+
+        function createMeteor(container) {
+            const meteor = document.createElement('div');
+            meteor.className = 'meteor';
+            meteor.style.left = Math.random() * 100 + '%';
+            meteor.style.top = Math.random() * 50 + '%';
+            container.appendChild(meteor);
+
+            meteor.addEventListener('animationend', function() {
+                meteor.remove();
+                createMeteor(container);
+            });
+        }
+
+        // ========== 3. 滚动动画 ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in, .slide-left, .slide-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== 4. 导航栏滚动效果 ==========
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== 5. 移动端菜单 ==========
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // ========== 初始化 ==========
+        window.addEventListener('load', function() {
+            createBackground();
+        });
+    </script>
+</body>
+</html>
