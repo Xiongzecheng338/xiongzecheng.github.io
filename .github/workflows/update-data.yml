@@ -1,0 +1,33 @@
+name: Update Data
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 0点 (北京时间早上8点) 运行
+  workflow_dispatch: # 允许手动触发运行
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Fetch Data
+        run: python scripts/fetch_data.py
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update data: Repos & Quotes" --allow-empty
+          git push
