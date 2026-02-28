@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游乐场 | 熊泽城</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/games.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Badhope<span>.dev</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">关于我</a></li>
+                <li><a href="index.html#dashboard">仪表盘</a></li>
+                <li><a href="index.html#experience">经历</a></li>
+                <li><a href="index.html#articles">文章</a></li>
+                <li><a href="uses.html">工具箱</a></li>
+                <li><a href="playground.html" class="active">游乐场</a></li>
+                <li><button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="playground-hero">
+        <div class="container">
+            <h1 class="page-title">开发者游乐场</h1>
+            <p class="page-desc">代码不只是工具，也可以是玩具。来玩一局贪吃蛇放松一下吧！</p>
+        </div>
+    </section>
+
+    <section class="game-section section-padding">
+        <div class="container">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="score-board">
+                        得分: <span id="score">0</span>
+                    </div>
+                    <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                </div>
+                <canvas id="game-canvas" width="400" height="400"></canvas>
+                <div class="game-controls">
+                    <p>使用键盘方向键或 WASD 控制移动</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Xiong Zecheng. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/snake-game.js"></script>
+</body>
+</html>
