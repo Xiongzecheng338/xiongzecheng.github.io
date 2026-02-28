@@ -126,4 +126,49 @@ document.addEventListener('DOMContentLoaded', () => {
         skillObserver.observe(skillSection);
     }
 })();
+// 6. 时间轴滚动动画 {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    const animateTimeline = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target); // 只触发一次
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(animateTimeline, {
+        threshold: 0.2, // 当20%的元素可见时触发
+        rootMargin: "0px 0px -50px 0px" // 稍微提前触发
+    });
+
+    timelineItems.forEach(item => {
+        observer.observe(item);
+    });
+})();
+// 7. 项目与奖项滚动动画 {
+    const elements = document.querySelectorAll('.project-card, .award-item');
+
+    const animateOnScroll = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(animateOnScroll, {
+        threshold: 0.2
+    });
+
+    elements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.6s cubic-bezier(0.5, 0, 0, 1)';
+        observer.observe(el);
+    });
+})();
 
