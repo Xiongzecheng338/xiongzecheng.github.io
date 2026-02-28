@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的工具箱 | 熊泽城</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/uses.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 复用主页的导航栏结构 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Badhope<span>.dev</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">关于我</a></li>
+                <li><a href="index.html#dashboard">仪表盘</a></li>
+                <li><a href="index.html#experience">经历</a></li>
+                <li><a href="index.html#articles">文章</a></li>
+                <li><a href="uses.html" class="active">工具箱</a></li>
+                <li><a href="playground.html">游乐场</a></li>
+                <li><button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="uses-hero">
+        <div class="container">
+            <h1 class="page-title">我的装备 / Uses</h1>
+            <p class="page-desc">工欲善其事，必先利其器。这是我日常开发和工作中使用的软硬件清单。</p>
+        </div>
+    </section>
+
+    <section class="uses-content section-padding">
+        <div class="container">
+            <div class="uses-category">
+                <h2><i class="fas fa-laptop"></i> 硬件设备</h2>
+                <div class="uses-grid">
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="item-info">
+                            <h3>主力笔记本</h3>
+                            <p>MacBook Pro 14寸 M1 Pro。性能强劲，续航无敌，完美胜任数据分析和前端开发。</p>
+                        </div>
+                    </div>
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-keyboard"></i></div>
+                        <div class="item-info">
+                            <h3>键盘</h3>
+                            <p>Keychron K6。小巧便携，支持蓝牙多设备切换，红轴手感舒适。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uses-category">
+                <h2><i class="fas fa-code"></i> 开发工具</h2>
+                <div class="uses-grid">
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-terminal"></i></div>
+                        <div class="item-info">
+                            <h3>编辑器：VS Code</h3>
+                            <p>目前最爱的编辑器。配合 Vim 插件和 Remote SSH，开发效率极高。</p>
+                        </div>
+                    </div>
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-terminal"></i></div>
+                        <div class="item-info">
+                            <h3>终端：iTerm2 + Oh My Zsh</h3>
+                            <p>程序员必备。配置了 Powerlevel10k 主题，美观且功能强大。</p>
+                        </div>
+                    </div>
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-database"></i></div>
+                        <div class="item-info">
+                            <h3>数据库：DataGrip</h3>
+                            <p>JetBrains 出品，必属精品。对 MySQL 和 PostgreSQL 的支持非常完善。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uses-category">
+                <h2><i class="fas fa-rocket"></i> 效率工具</h2>
+                <div class="uses-grid">
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-brain"></i></div>
+                        <div class="item-info">
+                            <h3>Notion</h3>
+                            <p>我的第二大脑。用于知识管理、项目规划以及日常笔记。</p>
+                        </div>
+                    </div>
+                    <div class="uses-item">
+                        <div class="item-icon"><i class="fas fa-search"></i></div>
+                        <div class="item-info">
+                            <h3>Raycast</h3>
+                            <p>Spotlight 的替代品。脚本功能让我能快速执行一些自动化任务。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Xiong Zecheng. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
