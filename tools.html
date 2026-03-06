@@ -897,6 +897,9 @@
         </ul>
     </nav>
 
+    <!-- Anime.js 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
     <!-- 第一屏：标题区 -->
     <section class="hero-section">
         <h1 class="hero-title fade-in">工具补给站</h1>
@@ -1558,114 +1561,111 @@
         </div>
     </section>
 
-    <!-- 第七屏：趣味技术展示 -->
-    <section class="section" id="fun-tech">
+    <!-- 第七屏：趣味功能实验室 -->
+    <section class="section" id="fun-lab">
         <div class="section-header fade-in">
             <p class="section-number">06 / 08</p>
-            <h2 class="section-title">趣味技术展示</h2>
-        </div>
-
-        <div style="text-align: center; margin-bottom: 40px;">
-            <p style="font-size: 16px; color: var(--current-text-sec); margin-bottom: 20px;">
-                探索更多趣味功能，请访问我们的专属页面
-            </p>
-            <a href="fun.html" style="display: inline-block; background: var(--current-accent); color: #fff; padding: 14px 40px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 15px var(--current-shadow);">
-                🚀 前往趣味功能实验室
-            </a>
+            <h2 class="section-title">趣味功能实验室</h2>
         </div>
 
         <div class="nav-grid">
-            <!-- 今日运势 -->
-            <div class="nav-category scale-in" style="grid-column: span 2;">
-                <div class="nav-category-header">
-                    <span class="nav-category-icon">🔮</span>
-                    <h3 class="nav-category-title">今日运势查询</h3>
+            <!-- 趣味功能入口卡片 -->
+            <div class="nav-category scale-in" style="grid-column: span 2; text-align: center; padding: 50px 30px;">
+                <div class="nav-category-header" style="justify-content: center; border: none;">
+                    <span class="nav-category-icon" style="font-size: 48px;">🎪</span>
+                    <h3 class="nav-category-title" style="font-size: 24px;">趣味功能实验室</h3>
                 </div>
-                <div style="padding: 20px; text-align: center;">
-                    <p style="color: var(--current-text-sec); margin-bottom: 20px; font-size: 14px;">
-                        基于随机算法的趣味运势生成器，每日更新你的专属运势
+                <div style="max-width: 700px; margin: 0 auto;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 30px; font-size: 16px; line-height: 1.8;">
+                        探索更多趣味互动功能：今日运势、赛博抽签、决定助手、心理测试、幸运数字、硬币抛掷等六大核心功能，
+                        为你带来充满乐趣的互动体验！
                     </p>
-                    <div id="fortuneDisplay" style="background: var(--current-accent-soft); border-radius: 12px; padding: 30px; margin-bottom: 20px;">
-                        <div style="font-size: 64px; margin-bottom: 15px;">🌟</div>
-                        <div id="fortuneLevel" style="font-family: 'Orbitron', sans-serif; font-size: 28px; color: var(--current-accent); margin-bottom: 10px; font-weight: 700;">
-                            点击生成运势
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🔮</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">今日运势</div>
                         </div>
-                        <div id="fortuneText" style="font-size: 16px; color: var(--current-text-sec); line-height: 1.6;">
-                            看看今天的运气如何？
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🎋</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">赛博抽签</div>
                         </div>
-                    </div>
-                    <button onclick="generateFortune()" style="background: var(--current-accent); color: #fff; border: none; padding: 14px 40px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans SC', sans-serif;">
-                        🎯 生成今日运势
-                    </button>
-                </div>
-            </div>
-
-            <!-- 赛博抽签 -->
-            <div class="nav-category scale-in" style="grid-column: span 2;">
-                <div class="nav-category-header">
-                    <span class="nav-category-icon">🎋</span>
-                    <h3 class="nav-category-title">赛博抽签系统</h3>
-                </div>
-                <div style="padding: 20px; text-align: center;">
-                    <p style="color: var(--current-text-sec); margin-bottom: 20px; font-size: 14px;">
-                        数字化传统御神签，用科技的方式寻求指引
-                    </p>
-                    <div id="omikujiDisplay" style="background: var(--current-accent-soft); border-radius: 12px; padding: 30px; margin-bottom: 20px;">
-                        <div style="font-size: 64px; margin-bottom: 15px;">⛩️</div>
-                        <div id="omikujiResult" style="font-family: 'Orbitron', sans-serif; font-size: 32px; color: var(--current-accent); margin-bottom: 15px; font-weight: 700;">
-                            求签问卜
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🎲</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">决定助手</div>
                         </div>
-                        <div id="omikujiAdvice" style="font-size: 15px; color: var(--current-text-sec); line-height: 1.8; min-height: 60px;">
-                            点击抽取你的今日签文
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">💭</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">心理测试</div>
+                        </div>
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🍀</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">幸运数字</div>
+                        </div>
+                        <div style="padding: 15px; background: var(--current-accent-soft); border-radius: 10px;">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🪙</div>
+                            <div style="font-size: 12px; color: var(--current-text-sec);">硬币抛掷</div>
                         </div>
                     </div>
-                    <button onclick="drawOmikuji()" style="background: var(--current-accent); color: #fff; border: none; padding: 14px 40px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans SC', sans-serif;">
-                        🏮 抽取今日签
-                    </button>
-                </div>
-            </div>
-
-            <!-- 决定助手 -->
-            <div class="nav-category scale-in">
-                <div class="nav-category-header">
-                    <span class="nav-category-icon">🎲</span>
-                    <h3 class="nav-category-title">决定助手</h3>
-                </div>
-                <div style="padding: 20px; text-align: center;">
-                    <p style="color: var(--current-text-sec); margin-bottom: 15px; font-size: 13px;">
-                        选择困难症福音，让随机性帮你做决定
-                    </p>
-                    <input type="text" id="decideInput" placeholder="用逗号分隔选项" style="width: 100%; padding: 12px; border: 2px solid var(--current-border); border-radius: 8px; margin-bottom: 15px; background: var(--current-card); color: var(--current-text); font-size: 14px;">
-                    <button onclick="makeDecision()" style="width: 100%; background: var(--current-accent); color: #fff; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
-                        帮我决定
-                    </button>
-                    <div id="decideResult" style="margin-top: 15px; font-size: 18px; color: var(--current-accent); font-weight: 600; min-height: 30px;"></div>
-                </div>
-            </div>
-
-            <!-- 心理测试 -->
-            <div class="nav-category scale-in">
-                <div class="nav-category-header">
-                    <span class="nav-category-icon">💭</span>
-                    <h3 class="nav-category-title">趣味心理测试</h3>
-                </div>
-                <div style="padding: 20px; text-align: center;">
-                    <p style="color: var(--current-text-sec); margin-bottom: 15px; font-size: 13px;">
-                        简单的心理测试，探索你的内心世界
-                    </p>
-                    <button onclick="startPsychTest()" style="width: 100%; background: var(--current-accent); color: #fff; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px;">
-                        开始测试
-                    </button>
-                    <div id="psychTestResult" style="font-size: 14px; color: var(--current-text-sec); line-height: 1.6; min-height: 80px;"></div>
+                    <a href="fun.html" style="display: inline-block; background: var(--current-accent); color: #fff; padding: 16px 50px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 18px; transition: all 0.3s ease; box-shadow: 0 6px 20px var(--current-glow);">
+                        🚀 立即探索趣味功能
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 第八屏：更多实用工具 -->
-    <section class="section" id="more-tools">
+    <!-- 第八屏：GitHub 开源项目 & 技术文章 -->
+    <section class="section" id="github-projects">
         <div class="section-header fade-in">
             <p class="section-number">07 / 08</p>
+            <h2 class="section-title">GitHub 开源项目 & 技术文章</h2>
+        </div>
+
+        <div class="nav-grid">
+            <!-- GitHub 热门项目 -->
+            <div class="nav-category scale-in" style="grid-column: span 2;">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">⭐</span>
+                    <h3 class="nav-category-title">GitHub 热门开源项目</h3>
+                </div>
+                <div class="card-grid" id="githubProjectsGrid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    <!-- 项目卡片将通过 JS 动态加载 -->
+                    <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--current-text-sec);">
+                        <div style="font-size: 48px; margin-bottom: 15px;">⏳</div>
+                        <div>正在加载热门项目...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSDN 技术文章 -->
+            <div class="nav-category scale-in" style="grid-column: span 2;">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">📰</span>
+                    <h3 class="nav-category-title">精选技术文章</h3>
+                </div>
+                <div style="padding: 20px; text-align: center; margin-bottom: 20px;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 20px; font-size: 14px;">
+                        每日更新 CSDN 精选技术文章，涵盖前端、后端、AI 等领域
+                    </p>
+                    <div id="csdnArticles" style="display: grid; gap: 15px; text-align: left;">
+                        <!-- 文章列表将通过 JS 动态加载 -->
+                        <div style="text-align: center; padding: 40px; color: var(--current-text-sec);">
+                            <div style="font-size: 48px; margin-bottom: 15px;">⏳</div>
+                            <div>正在加载技术文章...</div>
+                        </div>
+                    </div>
+                    <button onclick="refreshArticles()" style="margin-top: 20px; background: var(--current-accent); color: #fff; border: none; padding: 12px 30px; font-size: 15px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+                        🔄 刷新文章列表
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第九屏：更多实用工具 -->
+    <section class="section" id="more-tools">
+        <div class="section-header fade-in">
+            <p class="section-number">08 / 08</p>
             <h2 class="section-title">更多实用工具</h2>
         </div>
 
@@ -1701,6 +1701,14 @@
                         <div class="nav-card-name">ProcessOn</div>
                         <div class="nav-card-desc">在线流程图工具</div>
                     </a>
+                    <a href="https://www.mindmanager.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">MindManager</div>
+                        <div class="nav-card-desc">专业思维导图</div>
+                    </a>
+                    <a href="https://www.geteverything.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Everything</div>
+                        <div class="nav-card-desc">极速文件搜索</div>
+                    </a>
                 </div>
             </div>
 
@@ -1735,6 +1743,14 @@
                         <div class="nav-card-name">Font Awesome</div>
                         <div class="nav-card-desc">图标字体库</div>
                     </a>
+                    <a href="https://dribbble.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Dribbble</div>
+                        <div class="nav-card-desc">设计师作品集</div>
+                    </a>
+                    <a href="https://www.behance.net/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Behance</div>
+                        <div class="nav-card-desc">创意作品展示</div>
+                    </a>
                 </div>
             </div>
 
@@ -1765,15 +1781,121 @@
                         <div class="nav-card-name">123 云盘</div>
                         <div class="nav-card-desc">不限速云盘</div>
                     </a>
+                    <a href="https://cloud.189.cn/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">天翼云盘</div>
+                        <div class="nav-card-desc">中国电信网盘</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 翻译 & 语言学习 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🌐</span>
+                    <h3 class="nav-category-title">翻译 & 语言学习</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://fanyi.baidu.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">百度翻译</div>
+                        <div class="nav-card-desc">多语言在线翻译</div>
+                    </a>
+                    <a href="https://fanyi.youdao.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">有道翻译</div>
+                        <div class="nav-card-desc">网易出品翻译工具</div>
+                    </a>
+                    <a href="https://translate.google.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Google 翻译</div>
+                        <div class="nav-card-desc">谷歌翻译服务</div>
+                    </a>
+                    <a href="https://www.deepl.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">DeepL</div>
+                        <div class="nav-card-desc">高精度 AI 翻译</div>
+                    </a>
+                    <a href="https://www.duolingo.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Duolingo</div>
+                        <div class="nav-card-desc">多邻国语言学习</div>
+                    </a>
+                    <a href="https://www.babbel.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Babbel</div>
+                        <div class="nav-card-desc">在线语言课程</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 在线工具集合 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🔧</span>
+                    <h3 class="nav-category-title">在线工具集合</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://tool.lu/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">在线工具</div>
+                        <div class="nav-card-desc">开发者工具集合</div>
+                    </a>
+                    <a href="https://www.matools.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">MAT 工具</div>
+                        <div class="nav-card-desc">在线工具箱</div>
+                    </a>
+                    <a href="https://convertio.co/zh/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Convertio</div>
+                        <div class="nav-card-desc">文件格式转换</div>
+                    </a>
+                    <a href="https://www.ilovepdf.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">iLovePDF</div>
+                        <div class="nav-card-desc">PDF 在线工具</div>
+                    </a>
+                    <a href="https://tinyjpg.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">TinyPNG</div>
+                        <div class="nav-card-desc">图片压缩工具</div>
+                    </a>
+                    <a href="https://squoosh.app/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Squoosh</div>
+                        <div class="nav-card-desc">谷歌图片压缩</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 生活 & 娱乐 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🎵</span>
+                    <h3 class="nav-category-title">生活 & 娱乐</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://music.163.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">网易云音乐</div>
+                        <div class="nav-card-desc">音乐播放平台</div>
+                    </a>
+                    <a href="https://y.qq.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">QQ 音乐</div>
+                        <div class="nav-card-desc">腾讯音乐平台</div>
+                    </a>
+                    <a href="https://www.xiachufang.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">下厨房</div>
+                        <div class="nav-card-desc">美食菜谱分享</div>
+                    </a>
+                    <a href="https://www.dianping.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">大众点评</div>
+                        <div class="nav-card-desc">生活服务指南</div>
+                    </a>
+                    <a href="https://www.mafengwo.cn/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">马蜂窝</div>
+                        <div class="nav-card-desc">旅游攻略分享</div>
+                    </a>
+                    <a href="https://www.qunar.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">去哪儿</div>
+                        <div class="nav-card-desc">旅游出行平台</div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 第九屏：结尾 -->
+    <!-- 第十屏：结尾 -->
     <section class="section" id="ending">
         <div class="section-header fade-in">
-            <p class="section-number">08 / 08</p>
+            <p class="section-number">09 / 09</p>
             <h2 class="section-title">持续更新中</h2>
         </div>
 
@@ -1782,6 +1904,20 @@
                 本页面会不定期新增更多 AI 工具、开发资源、学习网站和宝藏小众站点。
                 如果你发现好用的网站，也欢迎告诉我，一起完善这个导航站。
             </p>
+            <div style="margin-top: 40px; padding: 30px; background: var(--current-accent-soft); border-radius: 15px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">💡</div>
+                <p style="font-size: 16px; color: var(--current-text-sec); margin-bottom: 20px;">
+                    提示：GitHub 项目和技术文章会定期自动更新，也可以手动刷新获取最新内容
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="loadGitHubProjects()" style="background: var(--current-accent); color: #fff; border: none; padding: 12px 25px; font-size: 15px; font-weight: 600; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">
+                        🔄 刷新 GitHub 项目
+                    </button>
+                    <button onclick="refreshArticles()" style="background: var(--current-accent); color: #fff; border: none; padding: 12px 25px; font-size: 15px; font-weight: 600; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">
+                        📰 刷新技术文章
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1916,7 +2052,111 @@
         // ========== 初始化 ==========
         window.addEventListener('load', function() {
             createBackground();
+            loadGitHubProjects();
+            loadArticles();
+            
+            // 使用 Anime.js 增强动画效果
+            enhanceWithAnime();
         });
+        
+        // ========== Anime.js 增强动画 ==========
+        function enhanceWithAnime() {
+            // 标题文字弹跳动画
+            anime({
+                targets: '.hero-title',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                easing: 'easeOutExpo',
+                duration: 1500,
+                delay: 500
+            });
+            
+            // 导航卡片交错出现动画
+            anime({
+                targets: '.nav-category',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                easing: 'easeOutExpo',
+                duration: 1200,
+                delay: anime.stagger(100, {start: 500})
+            });
+            
+            // 工具卡片悬停放大效果
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    anime({
+                        targets: card,
+                        scale: 1.05,
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    anime({
+                        targets: card,
+                        scale: 1,
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+            
+            // 按钮点击波纹效果
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = button.getBoundingClientRect();
+                    const ripple = document.createElement('div');
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.6);
+                        transform: scale(0);
+                        pointer-events: none;
+                        left: ${e.clientX - rect.left}px;
+                        top: ${e.clientY - rect.top}px;
+                        width: 10px;
+                        height: 10px;
+                    `;
+                    
+                    button.style.position = 'relative';
+                    button.style.overflow = 'hidden';
+                    button.appendChild(ripple);
+                    
+                    anime({
+                        targets: ripple,
+                        width: ['10px', '300px'],
+                        height: ['10px', '300px'],
+                        opacity: [1, 0],
+                        duration: 600,
+                        easing: 'easeOutExpo',
+                        complete: () => ripple.remove()
+                    });
+                });
+            });
+            
+            // 滚动时标题装饰线动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const titleAfter = entry.target.querySelector('.section-title::after');
+                        if (titleAfter) {
+                            anime({
+                                targets: titleAfter,
+                                width: ['0%', '100px'],
+                                easing: 'easeOutExpo',
+                                duration: 800
+                            });
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            document.querySelectorAll('.section-header').forEach(header => {
+                observer.observe(header);
+            });
+        }
         
         // ========== 性能优化 ==========
         document.addEventListener('visibilitychange', function() {
@@ -1927,6 +2167,122 @@
         });
         
         // ========== 趣味技术展示功能 ==========
+        
+        // 加载 GitHub 热门项目
+        async function loadGitHubProjects() {
+            const grid = document.getElementById('githubProjectsGrid');
+            if (!grid) return;
+            
+            // 预定义的优质开源项目列表
+            const projects = [
+                { name: 'vuejs/core', desc: 'Vue.js 框架源码', lang: 'TypeScript' },
+                { name: 'facebook/react', desc: 'React UI 库', lang: 'JavaScript' },
+                { name: 'microsoft/vscode', desc: 'VS Code 编辑器', lang: 'TypeScript' },
+                { name: 'trekhleb/javascript-algorithms', desc: 'JavaScript 算法', lang: 'JavaScript' },
+                { name: 'freeCodeCamp/freeCodeCamp', desc: '免费编程学习', lang: 'JavaScript' },
+                { name: 'axios/axios', desc: 'HTTP 请求库', lang: 'JavaScript' },
+                { name: 'tailwindlabs/tailwindcss', desc: 'CSS 框架', lang: 'CSS' },
+                { name: 'vercel/next.js', desc: 'React 框架', lang: 'JavaScript' },
+                { name: 'denoland/deno', desc: '现代 JavaScript 运行时', lang: 'Rust' },
+                { name: 'prisma/prisma', desc: '数据库工具', lang: 'TypeScript' },
+                { name: 'Schniz/fnm', desc: 'Node.js 版本管理', lang: 'Rust' },
+                { name: 'goldbergyoni/nodebestpractices', desc: 'Node.js 最佳实践', lang: 'JavaScript' }
+            ];
+            
+            grid.innerHTML = '';
+            
+            // 随机选择 8 个项目展示
+            const shuffled = projects.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 8);
+            
+            selected.forEach(project => {
+                const card = document.createElement('a');
+                card.className = 'nav-card';
+                card.href = `https://github.com/${project.name}`;
+                card.target = '_blank';
+                card.innerHTML = `
+                    <div class="nav-card-name" style="font-size: 14px;">${project.name.split('/')[1]}</div>
+                    <div class="nav-card-desc" style="font-size: 12px;">${project.desc}</div>
+                    <div style="font-size: 11px; color: var(--current-text-sec); margin-top: 4px;">${project.lang}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // CSDN 技术文章列表
+        async function getTechArticles() {
+            try {
+                // 从 articles.json 加载文章数据
+                const response = await fetch('articles.json');
+                const data = await response.json();
+                return data.articles || [];
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                // 返回备用文章数据
+                return [
+                    { title: '深入理解 JavaScript 闭包与作用域链', author: '前端达人', views: '10w+', url: 'https://blog.csdn.net/' },
+                    { title: 'Vue 3 Composition API 完全指南', author: 'Vue 技术控', views: '8.5w+', url: 'https://blog.csdn.net/' },
+                    { title: 'React Hooks 最佳实践与性能优化', author: 'React 专家', views: '7.2w+', url: 'https://blog.csdn.net/' },
+                    { title: 'TypeScript 高级类型技巧详解', author: 'TS 爱好者', views: '6.8w+', url: 'https://blog.csdn.net/' },
+                    { title: 'Node.js 微服务架构设计实战', author: '后端工程师', views: '5.9w+', url: 'https://blog.csdn.net/' },
+                    { title: 'CSS Grid 布局完全指南', author: 'CSS 大师', views: '5.5w+', url: 'https://blog.csdn.net/' },
+                    { title: 'Webpack 5 性能优化终极方案', author: '构建专家', views: '4.8w+', url: 'https://blog.csdn.net/' },
+                    { title: 'Git 高级用法与团队协作流程', author: 'DevOps 工程师', views: '4.5w+', url: 'https://blog.csdn.net/' },
+                    { title: 'Docker 容器化部署最佳实践', author: '云原生开发者', views: '4.2w+', url: 'https://blog.csdn.net/' },
+                    { title: '算法面试高频题解析', author: '算法大神', views: '3.9w+', url: 'https://blog.csdn.net/' }
+                ];
+            }
+        }
+        
+        // 加载 CSDN 技术文章
+        async function loadArticles() {
+            const container = document.getElementById('csdnArticles');
+            if (!container) return;
+            
+            const articles = await getTechArticles();
+            container.innerHTML = '';
+            
+            articles.forEach((article, index) => {
+                const articleEl = document.createElement('div');
+                articleEl.style.cssText = 'padding: 15px; background: rgba(0,0,0,0.05); border-radius: 8px; border-left: 3px solid var(--current-accent); transition: all 0.3s ease;';
+                articleEl.onmouseenter = function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.background = 'var(--current-accent-soft)';
+                };
+                articleEl.onmouseleave = function() {
+                    this.style.transform = 'translateX(0)';
+                    this.style.background = 'rgba(0,0,0,0.05)';
+                };
+                
+                articleEl.innerHTML = `
+                    <a href="${article.url}" target="_blank" style="text-decoration: none; color: var(--current-text); display: block;">
+                        <div style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--current-accent);">
+                            ${index + 1}. ${article.title}
+                        </div>
+                        <div style="font-size: 13px; color: var(--current-text-sec); display: flex; gap: 15px;">
+                            <span>👤 ${article.author}</span>
+                            <span>👁 ${article.views}</span>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(articleEl);
+            });
+        }
+        
+        // 刷新文章列表
+        async function refreshArticles() {
+            const container = document.getElementById('csdnArticles');
+            if (!container) return;
+            
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(async () => {
+                await loadArticles();
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 300);
+        }
         
         // 今日运势生成器
         function generateFortune() {

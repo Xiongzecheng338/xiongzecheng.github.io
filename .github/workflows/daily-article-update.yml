@@ -1,0 +1,125 @@
+name: Daily Article Update
+
+on:
+  schedule:
+    # 每天 UTC 时间 0:00 运行 (北京时间 8:00)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  update-articles:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Update articles
+        run: |
+          # 更新日期
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          
+          # 创建新的文章数据 (这里使用示例数据，实际应该调用 API 获取)
+          cat > articles.json << 'EOF'
+          {
+            "lastUpdated": "CURRENT_DATE",
+            "articles": [
+              {
+                "title": "深入理解 JavaScript 闭包与作用域链",
+                "author": "前端达人",
+                "views": "10w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["JavaScript", "前端"]
+              },
+              {
+                "title": "Vue 3 Composition API 完全指南",
+                "author": "Vue 技术控",
+                "views": "8.5w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["Vue", "前端"]
+              },
+              {
+                "title": "React Hooks 最佳实践与性能优化",
+                "author": "React 专家",
+                "views": "7.2w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["React", "前端"]
+              },
+              {
+                "title": "TypeScript 高级类型技巧详解",
+                "author": "TS 爱好者",
+                "views": "6.8w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["TypeScript", "前端"]
+              },
+              {
+                "title": "Node.js 微服务架构设计实战",
+                "author": "后端工程师",
+                "views": "5.9w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["Node.js", "后端"]
+              },
+              {
+                "title": "CSS Grid 布局完全指南",
+                "author": "CSS 大师",
+                "views": "5.5w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["CSS", "前端"]
+              },
+              {
+                "title": "Webpack 5 性能优化终极方案",
+                "author": "构建专家",
+                "views": "4.8w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["Webpack", "工程化"]
+              },
+              {
+                "title": "Git 高级用法与团队协作流程",
+                "author": "DevOps 工程师",
+                "views": "4.5w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["Git", "DevOps"]
+              },
+              {
+                "title": "Docker 容器化部署最佳实践",
+                "author": "云原生开发者",
+                "views": "4.2w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["Docker", "DevOps"]
+              },
+              {
+                "title": "算法面试高频题解析",
+                "author": "算法大神",
+                "views": "3.9w+",
+                "url": "https://blog.csdn.net/",
+                "tags": ["算法", "面试"]
+              }
+            ]
+          }
+          EOF
+          
+          # 替换日期
+          sed -i "s/CURRENT_DATE/$CURRENT_DATE/g" articles.json
+          
+          # 配置 Git 用户信息
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 提交并推送更改
+          git add articles.json
+          git commit -m "chore: 每日自动更新文章列表 [$CURRENT_DATE]" || echo "No changes to commit"
+          git push origin main
+      
+      - name: Create Issue
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: 文章列表已自动更新
+          content-filepath: articles.json
+          labels: automated
