@@ -18,9 +18,11 @@
             --text-light-secondary: #1565c0;
             --accent-light: #0097a7;
             --accent-light-hover: #00acc1;
+            --accent-light-soft: rgba(0, 151, 167, 0.15);
             --glow-light: rgba(0, 151, 167, 0.5);
             --card-light: rgba(255, 255, 255, 0.95);
             --shadow-light: rgba(13, 71, 161, 0.1);
+            --border-light: rgba(0, 151, 167, 0.3);
 
             /* 黑色主题 - 优化后的色彩系统 */
             --bg-dark: #0d1117;
@@ -28,9 +30,11 @@
             --text-dark-secondary: #8b949e;
             --accent-dark: #58a6ff;
             --accent-dark-hover: #79c0ff;
+            --accent-dark-soft: rgba(88, 166, 255, 0.15);
             --glow-dark: rgba(88, 166, 255, 0.4);
             --card-dark: rgba(22, 27, 34, 0.95);
             --shadow-dark: rgba(88, 166, 255, 0.1);
+            --border-dark: rgba(88, 166, 255, 0.3);
 
             /* 当前主题 */
             --current-bg: var(--bg-light);
@@ -38,9 +42,11 @@
             --current-text-sec: var(--text-light-secondary);
             --current-accent: var(--accent-light);
             --current-accent-hover: var(--accent-light-hover);
+            --current-accent-soft: var(--accent-light-soft);
             --current-glow: var(--glow-light);
             --current-card: var(--card-light);
             --current-shadow: var(--shadow-light);
+            --current-border: var(--border-light);
 
             /* 动画时间函数 */
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,9 +60,11 @@
             --current-text-sec: var(--text-dark-secondary);
             --current-accent: var(--accent-dark);
             --current-accent-hover: var(--accent-dark-hover);
+            --current-accent-soft: var(--accent-dark-soft);
             --current-glow: var(--glow-dark);
             --current-card: var(--card-dark);
             --current-shadow: var(--shadow-dark);
+            --current-border: var(--border-dark);
         }
         
         /* ========== 页面加载动画 ========== */
@@ -605,6 +613,238 @@
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             }
+            
+            .nav-category[style*="grid-column: span 2"] {
+                grid-column: span 1 !important;
+            }
+        }
+        
+        /* ========== 增强按钮样式 ========== */
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--current-glow);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* ========== 输入框样式 ========== */
+        input:focus {
+            outline: none;
+            border-color: var(--current-accent);
+            box-shadow: 0 0 0 3px var(--current-accent-soft);
+        }
+        
+        /* ========== 卡片悬停增强 ========== */
+        .nav-category {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-category::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--current-accent-soft) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .nav-category:hover::before {
+            opacity: 1;
+        }
+        
+        /* ========== 分类标题增强 ========== */
+        .nav-category-header {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* ========== 卡片网格增强 ========== */
+        .card-grid {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* ========== 滚动条增强 ========== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--current-accent), var(--current-accent-hover));
+            border-radius: 5px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--current-accent-hover), var(--current-accent));
+        }
+        
+        /* ========== 趣味技术展示特效 ========== */
+        #fortuneDisplay, #omikujiDisplay {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px var(--current-shadow);
+        }
+        
+        #fortuneDisplay:hover, #omikujiDisplay:hover {
+            box-shadow: 0 8px 30px var(--current-glow);
+            transform: translateY(-3px);
+        }
+        
+        /* 按钮脉冲动画 */
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px var(--current-shadow);
+            }
+            50% {
+                box-shadow: 0 6px 25px var(--current-glow);
+            }
+        }
+        
+        button {
+            animation: buttonPulse 3s ease-in-out infinite;
+        }
+        
+        button:hover {
+            animation: none;
+        }
+        
+        /* 结果展示动画 */
+        @keyframes resultAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        #fortuneLevel, #omikujiResult {
+            animation: resultAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* 心理测试按钮悬停效果 */
+        #psychTestResult button:hover {
+            background: var(--current-accent) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+        
+        /* ========== 输入框增强样式 ========== */
+        input[type="text"] {
+            transition: all 0.3s ease;
+            border: 2px solid var(--current-border);
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--current-accent);
+            box-shadow: 0 0 0 3px var(--current-accent-soft);
+            transform: translateY(-1px);
+        }
+        
+        input[type="text"]::placeholder {
+            color: var(--current-text-sec);
+            opacity: 0.6;
+        }
+        
+        /* ========== 趣味功能卡片增强 ========== */
+        .nav-category[style*="grid-column: span 2"] {
+            background: linear-gradient(135deg, var(--current-card) 0%, rgba(100, 255, 218, 0.05) 100%);
+        }
+        
+        /* ========== 动画效果增强 ========== */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* ========== 工具卡片悬停效果增强 ========== */
+        .nav-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .nav-card:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* ========== 结果显示增强 ========== */
+        #fortuneDisplay, #omikujiDisplay {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #fortuneDisplay::before, #omikujiDisplay::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ========== 滚动指示器增强 ========== */
+        .scroll-arrow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--current-glow);
+        }
+        
+        /* ========== 分类图标动画 ========== */
+        .nav-category-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-category:hover .nav-category-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+        
+        /* ========== 标题装饰线动画 ========== */
+        .section-title::after {
+            transition: width 0.5s ease;
+        }
+        
+        .section-header:hover .section-title::after {
+            width: 150px;
         }
     </style>
 </head>
@@ -647,6 +887,7 @@
             <li><a href="resume.html">简历</a></li>
             <li><a href="works.html">作品集</a></li>
             <li><a href="tools.html" class="active">工具站</a></li>
+            <li><a href="fun.html">趣味功能</a></li>
             <li><a href="contact.html">联系方式</a></li>
             <li>
                 <div class="theme-toggle" id="themeToggle">
@@ -674,7 +915,7 @@
     <!-- 第二屏：AI 工具区 -->
     <section class="section" id="ai-tools">
         <div class="section-header fade-in">
-            <p class="section-number">01 / 06</p>
+            <p class="section-number">01 / 08</p>
             <h2 class="section-title">AI 工具箱</h2>
         </div>
 
@@ -862,15 +1103,9 @@
     <!-- 第三屏：开发 & 学习资源 -->
     <section class="section" id="dev-tools">
         <div class="section-header fade-in">
-            <p class="section-number">02 / 06</p>
+            <p class="section-number">02 / 08</p>
             <h2 class="section-title">开发 & 学习资源</h2>
         </div>
-
-        <!--
-          【如何新增开发类网站】
-          参考 AI 工具区的结构，复制一个 nav-category 块，
-          修改标题和里面的 nav-card 即可。
-        -->
 
         <div class="nav-grid">
             <!-- 开发者平台 -->
@@ -880,37 +1115,26 @@
                     <h3 class="nav-category-title">开发者平台 & 文档</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- GitHub -->
                     <a href="https://github.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">GitHub</div>
                         <div class="nav-card-desc">全球最大代码托管平台</div>
                     </a>
-
-                    <!-- Gitee -->
                     <a href="https://gitee.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Gitee</div>
                         <div class="nav-card-desc">开源中国代码托管平台</div>
                     </a>
-
-                    <!-- Stack Overflow -->
                     <a href="https://stackoverflow.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Stack Overflow</div>
                         <div class="nav-card-desc">程序员问答社区</div>
                     </a>
-
-                    <!-- 掘金 -->
                     <a href="https://juejin.cn/" target="_blank" class="nav-card">
                         <div class="nav-card-name">掘金</div>
                         <div class="nav-card-desc">技术文章 & 沸点</div>
                     </a>
-
-                    <!-- V2EX -->
                     <a href="https://www.v2ex.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">V2EX</div>
                         <div class="nav-card-desc">创意工作者社区</div>
                     </a>
-
-                    <!-- SegmentFault 思否 -->
                     <a href="https://segmentfault.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">SegmentFault</div>
                         <div class="nav-card-desc">中文技术社区</div>
@@ -925,37 +1149,26 @@
                     <h3 class="nav-category-title">在线学习 & 教程</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- Coursera -->
                     <a href="https://www.coursera.org/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Coursera</div>
                         <div class="nav-card-desc">全球顶尖课程平台</div>
                     </a>
-
-                    <!-- freeCodeCamp -->
                     <a href="https://www.freecodecamp.org/" target="_blank" class="nav-card">
                         <div class="nav-card-name">freeCodeCamp</div>
                         <div class="nav-card-desc">免费编程学习</div>
                     </a>
-
-                    <!-- LeetCode -->
                     <a href="https://leetcode.cn/" target="_blank" class="nav-card">
                         <div class="nav-card-name">LeetCode</div>
                         <div class="nav-card-desc">算法刷题平台</div>
                     </a>
-
-                    <!-- 牛客网 -->
                     <a href="https://www.nowcoder.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">牛客网</div>
                         <div class="nav-card-desc">求职刷题 & 面经</div>
                     </a>
-
-                    <!-- 菜鸟教程 -->
                     <a href="https://www.runoob.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">菜鸟教程</div>
                         <div class="nav-card-desc">编程入门教程</div>
                     </a>
-
-                    <!-- MDN Web Docs -->
                     <a href="https://developer.mozilla.org/" target="_blank" class="nav-card">
                         <div class="nav-card-name">MDN Web Docs</div>
                         <div class="nav-card-desc">权威 Web 开发文档</div>
@@ -963,58 +1176,306 @@
                 </div>
             </div>
 
-            <!-- 开发工具 -->
+            <!-- 前端开发工具 -->
             <div class="nav-category scale-in">
                 <div class="nav-category-header">
-                    <span class="nav-category-icon">🛠️</span>
-                    <h3 class="nav-category-title">开发工具 & 在线工具</h3>
+                    <span class="nav-category-icon">🎨</span>
+                    <h3 class="nav-category-title">前端开发工具</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- VS Code -->
                     <a href="https://code.visualstudio.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">VS Code</div>
                         <div class="nav-card-desc">宇宙第一 IDE</div>
                     </a>
-
-                    <!-- CodePen -->
+                    <a href="https://webstorm.jetbrains.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">WebStorm</div>
+                        <div class="nav-card-desc">JetBrains 前端 IDE</div>
+                    </a>
                     <a href="https://codepen.io/" target="_blank" class="nav-card">
                         <div class="nav-card-name">CodePen</div>
                         <div class="nav-card-desc">前端代码沙盒</div>
                     </a>
-
-                    <!-- Regex101 -->
-                    <a href="https://regex101.com/" target="_blank" class="nav-card">
-                        <div class="nav-card-name">Regex101</div>
-                        <div class="nav-card-desc">正则表达式在线测试</div>
+                    <a href="https://codesandbox.io/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">CodeSandbox</div>
+                        <div class="nav-card-desc">在线开发环境</div>
                     </a>
-
-                    <!-- JSON Formatter -->
-                    <a href="https://jsonformatter.org/" target="_blank" class="nav-card">
-                        <div class="nav-card-name">JSON Formatter</div>
-                        <div class="nav-card-desc">JSON 格式化工具</div>
+                    <a href="https://stackblitz.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">StackBlitz</div>
+                        <div class="nav-card-desc">WebContainers 技术</div>
                     </a>
+                    <a href="https://vitejs.dev/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Vite</div>
+                        <div class="nav-card-desc">下一代前端构建工具</div>
+                    </a>
+                </div>
+            </div>
 
-                    <!-- Can I Use -->
-                    <a href="https://caniuse.com/" target="_blank" class="nav-card">
-                        <div class="nav-card-name">Can I Use</div>
-                        <div class="nav-card-desc">浏览器兼容性查询</div>
+            <!-- 后端开发工具 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">⚙️</span>
+                    <h3 class="nav-category-title">后端开发工具</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://www.postman.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Postman</div>
+                        <div class="nav-card-desc">API 开发测试工具</div>
+                    </a>
+                    <a href="https://insomnia.rest/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Insomnia</div>
+                        <div class="nav-card-desc">轻量级 API 客户端</div>
+                    </a>
+                    <a href="https://www.docker.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Docker</div>
+                        <div class="nav-card-desc">容器化平台</div>
+                    </a>
+                    <a href="https://kubernetes.io/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Kubernetes</div>
+                        <div class="nav-card-desc">容器编排引擎</div>
+                    </a>
+                    <a href="https://www.nginx.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Nginx</div>
+                        <div class="nav-card-desc">高性能 Web 服务器</div>
+                    </a>
+                    <a href="https://nodejs.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Node.js</div>
+                        <div class="nav-card-desc">JavaScript 运行时</div>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 第四屏：动漫 & 娱乐 -->
-    <section class="section" id="anime-fun">
+    <!-- 第四屏：数据库 & 云服务 -->
+    <section class="section" id="database-cloud">
         <div class="section-header fade-in">
-            <p class="section-number">03 / 06</p>
-            <h2 class="section-title">动漫 & 娱乐</h2>
+            <p class="section-number">03 / 08</p>
+            <h2 class="section-title">数据库 & 云服务</h2>
         </div>
 
-        <!--
-          【如何新增动漫/娱乐站点】
-          同样复制 nav-category 结构即可。
-        -->
+        <div class="nav-grid">
+            <!-- 数据库管理 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🗄️</span>
+                    <h3 class="nav-category-title">数据库管理</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://www.mysql.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">MySQL</div>
+                        <div class="nav-card-desc">最流行的关系型数据库</div>
+                    </a>
+                    <a href="https://www.postgresql.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">PostgreSQL</div>
+                        <div class="nav-card-desc">强大的开源关系数据库</div>
+                    </a>
+                    <a href="https://www.mongodb.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">MongoDB</div>
+                        <div class="nav-card-desc">NoSQL 文档数据库</div>
+                    </a>
+                    <a href="https://redis.io/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Redis</div>
+                        <div class="nav-card-desc">内存键值存储</div>
+                    </a>
+                    <a href="https://dbeaver.io/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">DBeaver</div>
+                        <div class="nav-card-desc">通用数据库工具</div>
+                    </a>
+                    <a href="https://www.db-browser.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">DB Browser</div>
+                        <div class="nav-card-desc">SQLite 可视化工具</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 云服务平台 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">☁️</span>
+                    <h3 class="nav-category-title">云服务平台</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://www.netlify.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Netlify</div>
+                        <div class="nav-card-desc">现代 Web 部署平台</div>
+                    </a>
+                    <a href="https://vercel.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Vercel</div>
+                        <div class="nav-card-desc">前端部署云平台</div>
+                    </a>
+                    <a href="https://pages.github.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">GitHub Pages</div>
+                        <div class="nav-card-desc">GitHub 静态网站托管</div>
+                    </a>
+                    <a href="https://www.heroku.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Heroku</div>
+                        <div class="nav-card-desc">云应用平台</div>
+                    </a>
+                    <a href="https://aws.amazon.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">AWS</div>
+                        <div class="nav-card-desc">亚马逊云服务</div>
+                    </a>
+                    <a href="https://cloud.google.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Google Cloud</div>
+                        <div class="nav-card-desc">谷歌云平台</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 数据科学工具 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">📊</span>
+                    <h3 class="nav-category-title">数据科学工具</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://www.anaconda.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Anaconda</div>
+                        <div class="nav-card-desc">Python 数据科学平台</div>
+                    </a>
+                    <a href="https://colab.research.google.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Google Colab</div>
+                        <div class="nav-card-desc">免费云端 Jupyter</div>
+                    </a>
+                    <a href="https://kaggle.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Kaggle</div>
+                        <div class="nav-card-desc">数据科学竞赛平台</div>
+                    </a>
+                    <a href="https://jupyter.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Jupyter</div>
+                        <div class="nav-card-desc">交互式计算环境</div>
+                    </a>
+                    <a href="https://plotly.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Plotly</div>
+                        <div class="nav-card-desc">交互式数据可视化</div>
+                    </a>
+                    <a href="https://tableau.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Tableau</div>
+                        <div class="nav-card-desc">商业智能工具</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第五屏：游戏开发 & 创意工具 -->
+    <section class="section" id="game-dev">
+        <div class="section-header fade-in">
+            <p class="section-number">04 / 08</p>
+            <h2 class="section-title">游戏开发 & 创意工具</h2>
+        </div>
+
+        <div class="nav-grid">
+            <!-- 游戏引擎 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🎮</span>
+                    <h3 class="nav-category-title">游戏引擎</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://unity.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Unity</div>
+                        <div class="nav-card-desc">跨平台游戏引擎</div>
+                    </a>
+                    <a href="https://www.unrealengine.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Unreal Engine</div>
+                        <div class="nav-card-desc">虚幻引擎</div>
+                    </a>
+                    <a href="https://godotengine.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Godot</div>
+                        <div class="nav-card-desc">开源游戏引擎</div>
+                    </a>
+                    <a href="https://www.construct.net/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Construct 3</div>
+                        <div class="nav-card-desc">2D 游戏制作工具</div>
+                    </a>
+                    <a href="https://www.gdevelop.io/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">GDevelop</div>
+                        <div class="nav-card-desc">开源无代码游戏引擎</div>
+                    </a>
+                    <a href="https://defold.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Defold</div>
+                        <div class="nav-card-desc">免费 2D/3D 游戏引擎</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3D 建模 & 动画 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">�</span>
+                    <h3 class="nav-category-title">3D 建模 & 动画</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://www.blender.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Blender</div>
+                        <div class="nav-card-desc">开源 3D 创作套件</div>
+                    </a>
+                    <a href="https://www.autodesk.com/products/maya/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Maya</div>
+                        <div class="nav-card-desc">专业 3D 动画软件</div>
+                    </a>
+                    <a href="https://www.cinema4d.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Cinema 4D</div>
+                        <div class="nav-card-desc">运动图形设计</div>
+                    </a>
+                    <a href="https://www.zbrush.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">ZBrush</div>
+                        <div class="nav-card-desc">数字雕刻工具</div>
+                    </a>
+                    <a href="https://www.substance3d.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Substance</div>
+                        <div class="nav-card-desc">3D 材质绘制</div>
+                    </a>
+                    <a href="https://makehuman.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">MakeHuman</div>
+                        <div class="nav-card-desc">3D 人物建模</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 创意编程 & 多媒体 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">✨</span>
+                    <h3 class="nav-category-title">创意编程 & 多媒体</h3>
+                </div>
+                <div class="card-grid">
+                    <a href="https://processing.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Processing</div>
+                        <div class="nav-card-desc">视觉艺术编程</div>
+                    </a>
+                    <a href="https://p5js.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">p5.js</div>
+                        <div class="nav-card-desc">创意编程 JS 库</div>
+                    </a>
+                    <a href="https://threejs.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Three.js</div>
+                        <div class="nav-card-desc">WebGL 3D 库</div>
+                    </a>
+                    <a href="https://d3js.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">D3.js</div>
+                        <div class="nav-card-desc">数据可视化库</div>
+                    </a>
+                    <a href="https://ffmpeg.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">FFmpeg</div>
+                        <div class="nav-card-desc">多媒体处理工具</div>
+                    </a>
+                    <a href="https://www.audacityteam.org/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Audacity</div>
+                        <div class="nav-card-desc">音频编辑软件</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第六屏：动漫 & 娱乐 -->
+    <section class="section" id="anime-fun">
+        <div class="section-header fade-in">
+            <p class="section-number">05 / 08</p>
+            <h2 class="section-title">动漫 & 娱乐</h2>
+        </div>
 
         <div class="nav-grid">
             <!-- 动漫 & ACG -->
@@ -1024,25 +1485,18 @@
                     <h3 class="nav-category-title">动漫 & ACG</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- 萌娘百科 -->
                     <a href="https://zh.moegirl.org.cn" target="_blank" class="nav-card">
                         <div class="nav-card-name">萌娘百科</div>
                         <div class="nav-card-desc">万物皆可萌的 ACG 百科</div>
                     </a>
-
-                    <!-- AGE 动漫（示例站点） -->
                     <a href="https://www.age456.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">AGE 动漫</div>
                         <div class="nav-card-desc">在线动漫观看平台</div>
                     </a>
-
-                    <!-- B 站 -->
                     <a href="https://www.bilibili.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">哔哩哔哩</div>
                         <div class="nav-card-desc">二次元文化大本营</div>
                     </a>
-
-                    <!-- AcFun -->
                     <a href="https://www.acfun.cn/" target="_blank" class="nav-card">
                         <div class="nav-card-name">AcFun</div>
                         <div class="nav-card-desc">天下漫友是一家</div>
@@ -1057,25 +1511,18 @@
                     <h3 class="nav-category-title">影视 & 娱乐</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- 爱奇艺 -->
                     <a href="https://www.iqiyi.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">爱奇艺</div>
                         <div class="nav-card-desc">在线视频平台</div>
                     </a>
-
-                    <!-- 腾讯视频 -->
                     <a href="https://v.qq.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">腾讯视频</div>
                         <div class="nav-card-desc">海量影视综艺</div>
                     </a>
-
-                    <!-- 优酷 -->
                     <a href="https://www.youku.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">优酷</div>
                         <div class="nav-card-desc">阿里旗下视频平台</div>
                     </a>
-
-                    <!-- 豆瓣 -->
                     <a href="https://www.douban.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">豆瓣</div>
                         <div class="nav-card-desc">电影/书籍/音乐评分</div>
@@ -1090,25 +1537,18 @@
                     <h3 class="nav-category-title">社区 & 资讯</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- 知乎 -->
                     <a href="https://www.zhihu.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">知乎</div>
                         <div class="nav-card-desc">中文问答社区</div>
                     </a>
-
-                    <!-- 微博 -->
                     <a href="https://weibo.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">微博</div>
                         <div class="nav-card-desc">社交媒体平台</div>
                     </a>
-
-                    <!-- 少数派 -->
                     <a href="https://sspai.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">少数派</div>
                         <div class="nav-card-desc">高效工作与生活</div>
                     </a>
-
-                    <!-- IT 之家 -->
                     <a href="https://www.ithome.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">IT 之家</div>
                         <div class="nav-card-desc">科技资讯门户</div>
@@ -1118,20 +1558,116 @@
         </div>
     </section>
 
-    <!-- 第五屏：更多实用工具（示例占位，你可以自行扩充） -->
-    <section class="section" id="more-tools">
+    <!-- 第七屏：趣味技术展示 -->
+    <section class="section" id="fun-tech">
         <div class="section-header fade-in">
-            <p class="section-number">04 / 06</p>
-            <h2 class="section-title">更多实用工具</h2>
+            <p class="section-number">06 / 08</p>
+            <h2 class="section-title">趣味技术展示</h2>
         </div>
 
-        <!--
-          【如何继续新增分类】
-          1. 复制一个 <div class="nav-grid">...</div> 整块。
-          2. 修改里面的 section-number 和 section-title。
-          3. 在新的 nav-grid 里继续添加 nav-category。
-          4. 网站数量不够？照着上面的 nav-card 模板继续加即可。
-        -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <p style="font-size: 16px; color: var(--current-text-sec); margin-bottom: 20px;">
+                探索更多趣味功能，请访问我们的专属页面
+            </p>
+            <a href="fun.html" style="display: inline-block; background: var(--current-accent); color: #fff; padding: 14px 40px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 15px var(--current-shadow);">
+                🚀 前往趣味功能实验室
+            </a>
+        </div>
+
+        <div class="nav-grid">
+            <!-- 今日运势 -->
+            <div class="nav-category scale-in" style="grid-column: span 2;">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🔮</span>
+                    <h3 class="nav-category-title">今日运势查询</h3>
+                </div>
+                <div style="padding: 20px; text-align: center;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 20px; font-size: 14px;">
+                        基于随机算法的趣味运势生成器，每日更新你的专属运势
+                    </p>
+                    <div id="fortuneDisplay" style="background: var(--current-accent-soft); border-radius: 12px; padding: 30px; margin-bottom: 20px;">
+                        <div style="font-size: 64px; margin-bottom: 15px;">🌟</div>
+                        <div id="fortuneLevel" style="font-family: 'Orbitron', sans-serif; font-size: 28px; color: var(--current-accent); margin-bottom: 10px; font-weight: 700;">
+                            点击生成运势
+                        </div>
+                        <div id="fortuneText" style="font-size: 16px; color: var(--current-text-sec); line-height: 1.6;">
+                            看看今天的运气如何？
+                        </div>
+                    </div>
+                    <button onclick="generateFortune()" style="background: var(--current-accent); color: #fff; border: none; padding: 14px 40px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans SC', sans-serif;">
+                        🎯 生成今日运势
+                    </button>
+                </div>
+            </div>
+
+            <!-- 赛博抽签 -->
+            <div class="nav-category scale-in" style="grid-column: span 2;">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🎋</span>
+                    <h3 class="nav-category-title">赛博抽签系统</h3>
+                </div>
+                <div style="padding: 20px; text-align: center;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 20px; font-size: 14px;">
+                        数字化传统御神签，用科技的方式寻求指引
+                    </p>
+                    <div id="omikujiDisplay" style="background: var(--current-accent-soft); border-radius: 12px; padding: 30px; margin-bottom: 20px;">
+                        <div style="font-size: 64px; margin-bottom: 15px;">⛩️</div>
+                        <div id="omikujiResult" style="font-family: 'Orbitron', sans-serif; font-size: 32px; color: var(--current-accent); margin-bottom: 15px; font-weight: 700;">
+                            求签问卜
+                        </div>
+                        <div id="omikujiAdvice" style="font-size: 15px; color: var(--current-text-sec); line-height: 1.8; min-height: 60px;">
+                            点击抽取你的今日签文
+                        </div>
+                    </div>
+                    <button onclick="drawOmikuji()" style="background: var(--current-accent); color: #fff; border: none; padding: 14px 40px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans SC', sans-serif;">
+                        🏮 抽取今日签
+                    </button>
+                </div>
+            </div>
+
+            <!-- 决定助手 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">🎲</span>
+                    <h3 class="nav-category-title">决定助手</h3>
+                </div>
+                <div style="padding: 20px; text-align: center;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 15px; font-size: 13px;">
+                        选择困难症福音，让随机性帮你做决定
+                    </p>
+                    <input type="text" id="decideInput" placeholder="用逗号分隔选项" style="width: 100%; padding: 12px; border: 2px solid var(--current-border); border-radius: 8px; margin-bottom: 15px; background: var(--current-card); color: var(--current-text); font-size: 14px;">
+                    <button onclick="makeDecision()" style="width: 100%; background: var(--current-accent); color: #fff; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                        帮我决定
+                    </button>
+                    <div id="decideResult" style="margin-top: 15px; font-size: 18px; color: var(--current-accent); font-weight: 600; min-height: 30px;"></div>
+                </div>
+            </div>
+
+            <!-- 心理测试 -->
+            <div class="nav-category scale-in">
+                <div class="nav-category-header">
+                    <span class="nav-category-icon">💭</span>
+                    <h3 class="nav-category-title">趣味心理测试</h3>
+                </div>
+                <div style="padding: 20px; text-align: center;">
+                    <p style="color: var(--current-text-sec); margin-bottom: 15px; font-size: 13px;">
+                        简单的心理测试，探索你的内心世界
+                    </p>
+                    <button onclick="startPsychTest()" style="width: 100%; background: var(--current-accent); color: #fff; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px;">
+                        开始测试
+                    </button>
+                    <div id="psychTestResult" style="font-size: 14px; color: var(--current-text-sec); line-height: 1.6; min-height: 80px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第八屏：更多实用工具 -->
+    <section class="section" id="more-tools">
+        <div class="section-header fade-in">
+            <p class="section-number">07 / 08</p>
+            <h2 class="section-title">更多实用工具</h2>
+        </div>
 
         <div class="nav-grid">
             <!-- 效率 & 办公 -->
@@ -1141,22 +1677,29 @@
                     <h3 class="nav-category-title">效率 & 办公</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- 石墨文档 -->
                     <a href="https://shimo.im/" target="_blank" class="nav-card">
                         <div class="nav-card-name">石墨文档</div>
                         <div class="nav-card-desc">在线协作文档</div>
                     </a>
-
-                    <!-- 腾讯文档 -->
                     <a href="https://docs.qq.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">腾讯文档</div>
                         <div class="nav-card-desc">在线文档协作</div>
                     </a>
-
-                    <!-- 有道云笔记 -->
                     <a href="https://note.youdao.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">有道云笔记</div>
                         <div class="nav-card-desc">笔记 & 知识管理</div>
+                    </a>
+                    <a href="https://www.notion.so/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Notion</div>
+                        <div class="nav-card-desc">一体化工作空间</div>
+                    </a>
+                    <a href="https://www.xmind.cn/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">XMind</div>
+                        <div class="nav-card-desc">思维导图工具</div>
+                    </a>
+                    <a href="https://processon.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">ProcessOn</div>
+                        <div class="nav-card-desc">在线流程图工具</div>
                     </a>
                 </div>
             </div>
@@ -1168,28 +1711,29 @@
                     <h3 class="nav-category-title">设计 & 素材</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- Figma -->
                     <a href="https://www.figma.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Figma</div>
                         <div class="nav-card-desc">在线 UI 设计工具</div>
                     </a>
-
-                    <!-- Canva -->
                     <a href="https://www.canva.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Canva</div>
                         <div class="nav-card-desc">平面设计模板</div>
                     </a>
-
-                    <!-- Unsplash -->
                     <a href="https://unsplash.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Unsplash</div>
                         <div class="nav-card-desc">免费高清图片</div>
                     </a>
-
-                    <!-- Pexels -->
                     <a href="https://www.pexels.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Pexels</div>
                         <div class="nav-card-desc">免费素材图片</div>
+                    </a>
+                    <a href="https://www.iconfont.cn/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">IconFont</div>
+                        <div class="nav-card-desc">阿里图标库</div>
+                    </a>
+                    <a href="https://fontawesome.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Font Awesome</div>
+                        <div class="nav-card-desc">图标字体库</div>
                     </a>
                 </div>
             </div>
@@ -1201,32 +1745,35 @@
                     <h3 class="nav-category-title">网盘 & 存储</h3>
                 </div>
                 <div class="card-grid">
-                    <!-- 百度网盘 -->
                     <a href="https://pan.baidu.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">百度网盘</div>
                         <div class="nav-card-desc">国内主流网盘</div>
                     </a>
-
-                    <!-- 阿里云盘 -->
                     <a href="https://www.aliyundrive.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">阿里云盘</div>
                         <div class="nav-card-desc">阿里旗下网盘</div>
                     </a>
-
-                    <!-- Google Drive -->
                     <a href="https://drive.google.com/" target="_blank" class="nav-card">
                         <div class="nav-card-name">Google Drive</div>
                         <div class="nav-card-desc">谷歌云存储</div>
+                    </a>
+                    <a href="https://www.dropbox.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">Dropbox</div>
+                        <div class="nav-card-desc">老牌云存储服务</div>
+                    </a>
+                    <a href="https://www.123pan.com/" target="_blank" class="nav-card">
+                        <div class="nav-card-name">123 云盘</div>
+                        <div class="nav-card-desc">不限速云盘</div>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 第六屏：结尾 -->
+    <!-- 第九屏：结尾 -->
     <section class="section" id="ending">
         <div class="section-header fade-in">
-            <p class="section-number">06 / 06</p>
+            <p class="section-number">08 / 08</p>
             <h2 class="section-title">持续更新中</h2>
         </div>
 
@@ -1235,13 +1782,6 @@
                 本页面会不定期新增更多 AI 工具、开发资源、学习网站和宝藏小众站点。
                 如果你发现好用的网站，也欢迎告诉我，一起完善这个导航站。
             </p>
-
-            <!--
-              【如何新增一整个页面区块】
-              1. 复制一个 <section class="section">...</section> 整块。
-              2. 修改里面的 id、section-number 和 section-title。
-              3. 在里面继续使用 nav-grid + nav-category 结构添加内容。
-            -->
         </div>
     </section>
 
@@ -1385,6 +1925,378 @@
                 container.style.animationPlayState = document.hidden ? 'paused' : 'running';
             }
         });
+        
+        // ========== 趣味技术展示功能 ==========
+        
+        // 今日运势生成器
+        function generateFortune() {
+            const fortunes = [
+                { level: '大吉', text: '今天是你运势爆棚的一天！无论是工作还是生活，都会顺风顺水。抓住机会，勇敢前行！', emoji: '🌟' },
+                { level: '吉', text: '整体运势不错，可能会有小惊喜。保持积极心态，好运自然来。', emoji: '✨' },
+                { level: '中吉', text: '平平淡淡才是真。今天适合稳扎稳打，不宜冒进。', emoji: '☀️' },
+                { level: '小吉', text: '运势尚可，注意细节会有意外收获。保持耐心，好事多磨。', emoji: '🌈' },
+                { level: '末吉', text: '运势一般，但只要努力也能有所收获。相信坚持的力量！', emoji: '🌱' },
+                { level: '平', text: '不好不坏的一天。按部就班完成计划就好，不必强求。', emoji: '⚖️' },
+                { level: '凶', text: '今天可能会遇到一些小挫折。保持冷静，谨慎行事，避免冲动决定。', emoji: '🌧️' }
+            ];
+            
+            const today = new Date().toDateString();
+            const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const fortune = fortunes[hash % fortunes.length];
+            
+            const levelEl = document.getElementById('fortuneLevel');
+            const textEl = document.getElementById('fortuneText');
+            const displayEl = document.getElementById('fortuneDisplay');
+            
+            if (levelEl && textEl && displayEl) {
+                displayEl.style.opacity = '0';
+                setTimeout(() => {
+                    levelEl.textContent = fortune.level;
+                    textEl.textContent = fortune.text;
+                    displayEl.querySelector('div:first-child').textContent = fortune.emoji;
+                    displayEl.style.opacity = '1';
+                }, 300);
+            }
+        }
+        
+        // 赛博抽签系统
+        function drawOmikuji() {
+            const omikuji = [
+                { result: '大吉', advice: '诸事皆宜，百事亨通。今天是你大展身手的好时机，不要犹豫，勇敢追求你的目标！', emoji: '🏆' },
+                { result: '中吉', advice: '运势平稳上升，只要脚踏实地，就能获得成功。适合制定长期计划。', emoji: '📈' },
+                { result: '小吉', advice: '小小的幸运就在身边。留意细节，可能会有意外的小收获。', emoji: '🍀' },
+                { result: '吉', advice: '整体运势良好，保持积极心态，好事自然会发生。', emoji: '✨' },
+                { result: '末吉', advice: '运势需要慢慢积累。不要急躁，耐心等待时机成熟。', emoji: '🌱' },
+                { result: '凶', advice: '今天宜静不宜动，谨言慎行。遇到困难不要硬拼，以退为进是上策。', emoji: '🧘' },
+                { result: '大凶', advice: '诸事需谨慎，避免重大决策。保持低调，修身养性，等待运势转机。', emoji: '🌑' }
+            ];
+            
+            const index = Math.floor(Math.random() * omikuji.length);
+            const result = omikuji[index];
+            
+            const resultEl = document.getElementById('omikujiResult');
+            const adviceEl = document.getElementById('omikujiAdvice');
+            const displayEl = document.getElementById('omikujiDisplay');
+            
+            if (resultEl && adviceEl && displayEl) {
+                displayEl.style.opacity = '0';
+                setTimeout(() => {
+                    resultEl.textContent = result.result;
+                    adviceEl.textContent = result.advice;
+                    displayEl.querySelector('div:first-child').textContent = result.emoji;
+                    displayEl.style.opacity = '1';
+                }, 300);
+            }
+        }
+        
+        // 决定助手
+        function makeDecision() {
+            const input = document.getElementById('decideInput');
+            const resultEl = document.getElementById('decideResult');
+            
+            if (!input || !resultEl) return;
+            
+            const options = input.value.split(/[,,]/).map(opt => opt.trim()).filter(opt => opt);
+            
+            if (options.length < 2) {
+                resultEl.textContent = '⚠️ 请输入至少两个选项，用逗号分隔';
+                return;
+            }
+            
+            const selectedIndex = Math.floor(Math.random() * options.length);
+            resultEl.textContent = '🎯 决定结果：' + options[selectedIndex];
+        }
+        
+        // 趣味心理测试
+        function startPsychTest() {
+            const tests = [
+                {
+                    question: '如果你可以选择一种超能力，你会选择？',
+                    options: ['飞行', '隐身', '读心术', '时间停止'],
+                    results: [
+                        '你是一个自由奔放的人，向往无拘无束的生活！',
+                        '你比较内向，喜欢观察而不是被关注。',
+                        '你对人性充满好奇，想要了解他人的真实想法。',
+                        '你希望掌控一切，是个很有野心的人！'
+                    ]
+                },
+                {
+                    question: '周末你更愿意？',
+                    options: ['宅在家里', '和朋友聚会', '户外运动', '学习新技能'],
+                    results: [
+                        '你是个享受独处的人，内心丰富而平静。',
+                        '你社交能力强，喜欢与人分享快乐！',
+                        '你充满活力，热爱大自然和冒险！',
+                        '你有上进心，不断提升自己是你的人生信条！'
+                    ]
+                },
+                {
+                    question: '你最喜欢的颜色是？',
+                    options: ['蓝色', '红色', '绿色', '黄色'],
+                    results: [
+                        '你冷静理性，是个值得信赖的人。',
+                        '你热情开朗，总是充满能量！',
+                        '你温和善良，追求和谐的生活。',
+                        '你乐观向上，总能给人带来快乐！'
+                    ]
+                }
+            ];
+            
+            const randomTest = tests[Math.floor(Math.random() * tests.length)];
+            const resultEl = document.getElementById('psychTestResult');
+            
+            if (!resultEl) return;
+            
+            resultEl.innerHTML = `
+                <div style="margin-bottom: 15px; font-weight: 600;">${randomTest.question}</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    ${randomTest.options.map((opt, i) => 
+                        `<button onclick="showTestResult('${randomTest.results[i]}')" 
+                         style="padding: 8px; border: 2px solid var(--current-accent); background: transparent; color: var(--current-accent); border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
+                            ${opt}
+                        </button>`
+                    ).join('')}
+                </div>
+            `;
+        }
+        
+        function showTestResult(result) {
+            const resultEl = document.getElementById('psychTestResult');
+            if (resultEl) {
+                resultEl.innerHTML = `<div style="background: var(--current-accent-soft); padding: 15px; border-radius: 8px; color: var(--current-text);">💡 ${result}</div>`;
+            }
+        }
+        
+        // ========== 增强功能：打字机效果 ==========
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+        
+        // ========== 增强功能：粒子爆炸效果 ==========
+        function createParticleExplosion(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 8px;
+                    height: 8px;
+                    background: var(--current-accent);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 10000;
+                    left: ${centerX}px;
+                    top: ${centerY}px;
+                    opacity: 1;
+                `;
+                document.body.appendChild(particle);
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const velocity = 100 + Math.random() * 100;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                let posX = 0;
+                let posY = 0;
+                let opacity = 1;
+                
+                const animate = () => {
+                    posX += vx * 0.02;
+                    posY += vy * 0.02;
+                    opacity -= 0.02;
+                    
+                    particle.style.transform = `translate(${posX}px, ${posY}px)`;
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // ========== 增强功能：卡片点击反馈 ==========
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                createParticleExplosion(this);
+            });
+        });
+        
+        // ========== 增强功能：运势生成动画增强 ==========
+        const originalGenerateFortune = generateFortune;
+        generateFortune = function() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = '🔮 占卜中...';
+            
+            const displayEl = document.getElementById('fortuneDisplay');
+            let count = 0;
+            const emojis = ['🌟', '✨', '☀️', '🌈', '🌱', '⚖️', '🌧️'];
+            
+            const interval = setInterval(() => {
+                displayEl.querySelector('div:first-child').textContent = emojis[count % emojis.length];
+                count++;
+            }, 100);
+            
+            setTimeout(() => {
+                clearInterval(interval);
+                originalGenerateFortune();
+                button.disabled = false;
+                button.textContent = '🎯 生成今日运势';
+                createParticleExplosion(displayEl);
+            }, 1000);
+        };
+        
+        // ========== 增强功能：抽签动画增强 ==========
+        const originalDrawOmikuji = drawOmikuji;
+        drawOmikuji = function() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = '🎋 抽签中...';
+            
+            const displayEl = document.getElementById('omikujiDisplay');
+            let count = 0;
+            const emojis = ['🏆', '📈', '🍀', '✨', '🌱', '🧘', '🌑'];
+            
+            const interval = setInterval(() => {
+                displayEl.querySelector('div:first-child').textContent = emojis[count % emojis.length];
+                count++;
+            }, 100);
+            
+            setTimeout(() => {
+                clearInterval(interval);
+                originalDrawOmikuji();
+                button.disabled = false;
+                button.textContent = '🏮 抽取今日签';
+                createParticleExplosion(displayEl);
+            }, 1200);
+        };
+        
+        // ========== 增强功能：决定助手动画 ==========
+        const originalMakeDecision = makeDecision;
+        makeDecision = function() {
+            const input = document.getElementById('decideInput');
+            const resultEl = document.getElementById('decideResult');
+            
+            if (!input || !resultEl) return;
+            
+            const options = input.value.split(/[,,]/).map(opt => opt.trim()).filter(opt => opt);
+            
+            if (options.length < 2) {
+                resultEl.textContent = '⚠️ 请输入至少两个选项，用逗号分隔';
+                resultEl.style.animation = 'shake 0.5s ease';
+                setTimeout(() => resultEl.style.animation = '', 500);
+                return;
+            }
+            
+            resultEl.textContent = '🎲 决定中...';
+            let count = 0;
+            
+            const interval = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * options.length);
+                resultEl.textContent = '🎲 ' + options[randomIndex];
+                count++;
+            }, 100);
+            
+            setTimeout(() => {
+                clearInterval(interval);
+                const selectedIndex = Math.floor(Math.random() * options.length);
+                resultEl.textContent = '🎯 决定结果：' + options[selectedIndex];
+                resultEl.style.animation = 'resultAppear 0.6s ease';
+            }, 1000);
+        };
+        
+        // ========== 增强功能：键盘快捷键 ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'd':
+                        e.preventDefault();
+                        if (document.getElementById('decideInput').value) {
+                            makeDecision();
+                        }
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        generateFortune();
+                        break;
+                    case 'o':
+                        e.preventDefault();
+                        drawOmikuji();
+                        break;
+                    case 'p':
+                        e.preventDefault();
+                        startPsychTest();
+                        break;
+                }
+            }
+        });
+        
+        // ========== 增强功能：鼠标跟随光效 ==========
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.nav-category');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+        
+        // ========== 增强功能：页面可见性变化处理 ==========
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+        });
+        
+        // ========== 增强功能：平滑滚动到指定区域 ==========
+        function smoothScrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // ========== 增强功能：添加抖动动画 ==========
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        console.log('🚀 工具站已加载完成！');
+        console.log('💡 快捷键提示：');
+        console.log('   Ctrl+F - 生成运势');
+        console.log('   Ctrl+O - 抽签');
+        console.log('   Ctrl+D - 做决定');
+        console.log('   Ctrl+P - 心理测试');
     </script>
 </body>
 </html>
