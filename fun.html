@@ -7,583 +7,24 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self';">
     <title>趣味功能 | 熊泽城</title>
     <meta name="description" content="今日运势、赛博抽签、决定助手等趣味互动功能">
 
-    <!-- 预连接优化 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 外部样式表 -->
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-        /* ========== 全局变量 ========== */
-        :root {
-            /* 蓝白主题 */
-            --bg-light: linear-gradient(135deg, #f0f7ff 0%, #e1f0ff 50%, #d0e8ff 100%);
-            --text-light-primary: #0d47a1;
-            --text-light-secondary: #1565c0;
-            --accent-light: #0097a7;
-            --accent-light-hover: #00acc1;
-            --accent-light-soft: rgba(0, 151, 167, 0.15);
-            --glow-light: rgba(0, 151, 167, 0.5);
-            --card-light: rgba(255, 255, 255, 0.95);
-            --shadow-light: rgba(13, 71, 161, 0.1);
-            --border-light: rgba(0, 151, 167, 0.3);
-
-            /* 黑色主题 */
-            --bg-dark: #0d1117;
-            --text-dark-primary: #e6edf3;
-            --text-dark-secondary: #8b949e;
-            --accent-dark: #58a6ff;
-            --accent-dark-hover: #79c0ff;
-            --accent-dark-soft: rgba(88, 166, 255, 0.15);
-            --glow-dark: rgba(88, 166, 255, 0.4);
-            --card-dark: rgba(22, 27, 34, 0.95);
-            --shadow-dark: rgba(88, 166, 255, 0.1);
-            --border-dark: rgba(88, 166, 255, 0.3);
-
-            /* 当前主题 */
-            --current-bg: var(--bg-light);
-            --current-text: var(--text-light-primary);
-            --current-text-sec: var(--text-light-secondary);
-            --current-accent: var(--accent-light);
-            --current-accent-hover: var(--accent-light-hover);
-            --current-accent-soft: var(--accent-light-soft);
-            --current-glow: var(--glow-light);
-            --current-card: var(--card-light);
-            --current-shadow: var(--shadow-light);
-            --current-border: var(--border-light);
-
-            /* 动画 */
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        body.dark-mode {
-            --current-bg: var(--bg-dark);
-            --current-text: var(--text-dark-primary);
-            --current-text-sec: var(--text-dark-secondary);
-            --current-accent: var(--accent-dark);
-            --current-accent-hover: var(--accent-dark-hover);
-            --current-accent-soft: var(--accent-dark-soft);
-            --current-glow: var(--glow-dark);
-            --current-card: var(--card-dark);
-            --current-shadow: var(--shadow-dark);
-            --current-border: var(--border-dark);
-        }
-
-        /* ========== 基础重置 ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--current-bg);
-            color: var(--current-text);
-            overflow-x: hidden;
-            transition: background 0.6s var(--ease-smooth), color 0.6s var(--ease-smooth);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        ::selection {
-            background: var(--current-accent);
-            color: #fff;
-        }
-
-        /* ========== 背景容器 ========== */
-        #bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: starTwinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes starTwinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* ========== 导航栏 ========== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.5s ease;
-            background: transparent;
-        }
-
-        nav:hover, nav.scrolled {
-            background: var(--current-card);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
-        }
-
-        .nav-logo {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            animation: logoSpin 20s linear infinite;
-        }
-
-        @keyframes logoSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .nav-logo svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 10px var(--current-accent));
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--current-text-sec);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 20px;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--current-accent);
-            background: rgba(100, 255, 218, 0.1);
-        }
-
-        .theme-toggle {
-            width: 60px;
-            height: 30px;
-            background: rgba(0, 188, 212, 0.3);
-            border-radius: 15px;
-            position: relative;
-            cursor: pointer;
-            border: 2px solid var(--current-accent);
-            transition: all 0.5s ease;
-        }
-
-        .theme-toggle-ball {
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            left: 2px;
-            top: 2px;
-            transition: all 0.5s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        body.dark-mode .theme-toggle-ball {
-            left: calc(100% - 26px);
-            background: #1a1a2e;
-        }
-
-        /* ========== 主容器 ========== */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 120px 20px 60px;
-        }
-
-        /* ========== 页面标题 ========== */
-        .page-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .page-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(36px, 6vw, 56px);
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--current-accent), var(--current-text), var(--current-accent));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textShine 3s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes textShine {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        .page-subtitle {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(16px, 2.5vw, 20px);
-            color: var(--current-text-sec);
-            letter-spacing: 3px;
-        }
-
-        /* ========== 功能网格 ========== */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .feature-card {
-            background: var(--current-card);
-            border: 1px solid var(--current-border);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(15px);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--current-accent-soft) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--current-accent);
-            box-shadow: 0 20px 50px var(--current-glow);
-        }
-
-        .feature-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--current-border);
-        }
-
-        .feature-icon {
-            font-size: 36px;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .feature-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            color: var(--current-text);
-            font-weight: 700;
-        }
-
-        .feature-desc {
-            color: var(--current-text-sec);
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        /* ========== 结果显示区域 ========== */
-        .result-display {
-            background: var(--current-accent-soft);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .result-display:hover {
-            box-shadow: 0 8px 30px var(--current-glow);
-            transform: translateY(-3px);
-        }
-
-        .result-emoji {
-            font-size: 64px;
-            margin-bottom: 15px;
-            animation: resultAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes resultAppear {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .result-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            color: var(--current-accent);
-            margin-bottom: 10px;
-            font-weight: 700;
-            animation: resultAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .result-text {
-            font-size: 15px;
-            color: var(--current-text-sec);
-            line-height: 1.8;
-        }
-
-        /* ========== 按钮样式 ========== */
-        .action-button {
-            width: 100%;
-            background: var(--current-accent);
-            color: #fff;
-            border: none;
-            padding: 16px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans SC', sans-serif;
-            box-shadow: 0 4px 15px var(--current-shadow);
-            animation: buttonPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes buttonPulse {
-            0%, 100% {
-                box-shadow: 0 4px 15px var(--current-shadow);
-            }
-            50% {
-                box-shadow: 0 6px 25px var(--current-glow);
-            }
-        }
-
-        .action-button:hover {
-            animation: none;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px var(--current-glow);
-        }
-
-        .action-button:active {
-            transform: translateY(0);
-        }
-
-        .action-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ========== 输入框样式 ========== */
-        .input-field {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid var(--current-border);
-            border-radius: 10px;
-            background: var(--current-card);
-            color: var(--current-text);
-            font-size: 15px;
-            font-family: 'Noto Sans SC', sans-serif;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--current-accent);
-            box-shadow: 0 0 0 3px var(--current-accent-soft);
-            transform: translateY(-1px);
-        }
-
-        .input-field::placeholder {
-            color: var(--current-text-sec);
-            opacity: 0.6;
-        }
-
-        /* ========== 选项按钮组 ========== */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .option-button {
-            padding: 12px;
-            border: 2px solid var(--current-accent);
-            background: transparent;
-            color: var(--current-accent);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans SC', sans-serif;
-        }
-
-        .option-button:hover {
-            background: var(--current-accent);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--current-glow);
-        }
-
-        /* ========== 响应式 ========== */
-        @media (max-width: 768px) {
-            nav {
-                padding: 15px 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                padding: 100px 15px 40px;
-            }
-        }
-
-        /* ========== 粒子效果 ========== */
-        .particle {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--current-accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            opacity: 1;
-        }
-
-        /* ========== 加载动画 ========== */
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid transparent;
-            border-top-color: var(--current-accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ========== 抖动动画 ========== */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .shake {
-            animation: shake 0.5s ease;
-        }
-
-        /* ========== 返回主页按钮 ========== */
-        .back-home {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--current-card);
-            border: 2px solid var(--current-accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 4px 20px var(--current-shadow);
-        }
-
-        .back-home:hover {
-            background: var(--current-accent);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px var(--current-glow);
-        }
-
-        .back-home:hover svg {
-            stroke: #fff;
-        }
-
-        .back-home svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--current-accent);
-            transition: stroke 0.3s;
-        }
-    </style>
 </head>
 <body>
-    <!-- 背景 -->
     <div id="bg-container"></div>
 
-    <!-- 导航栏 -->
     <nav id="navbar">
-        <div class="nav-logo" onclick="window.location.href='index.html'">
+        <div class="nav-logo" onclick="window.location.href='index.html'" title="返回首页">
             <svg viewBox="0 0 100 100">
                 <polygon points="50,10 61,35 90,35 67,55 78,90 50,70 22,90 33,55 10,35 39,35"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="2"
+                         fill="none" stroke="currentColor" stroke-width="2"
                          style="color: var(--current-accent)">
                 </polygon>
             </svg>
@@ -597,500 +38,763 @@
             <li><a href="fun.html" class="active">趣味功能</a></li>
             <li><a href="contact.html">联系方式</a></li>
             <li>
-                <div class="theme-toggle" id="themeToggle">
+                <div class="theme-toggle" id="themeToggle" role="button" aria-label="切换主题" tabindex="0">
                     <div class="theme-toggle-ball"></div>
                 </div>
             </li>
         </ul>
     </nav>
 
-    <!-- 主容器 -->
-    <div class="container">
-        <!-- 页面标题 -->
+    <div class="container" style="position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 120px 20px 60px;">
         <div class="page-header">
             <h1 class="page-title">趣味功能实验室</h1>
             <p class="page-subtitle">FUN TECH LAB</p>
         </div>
 
-        <!-- 功能网格 -->
         <div class="feature-grid">
-            <!-- 今日运势 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">🔮</span>
+                    <span class="feature-icon" aria-hidden="true">🔮</span>
                     <h2 class="feature-title">今日运势</h2>
                 </div>
-                <p class="feature-desc">
-                    基于日期算法的趣味运势生成器，每日更新你的专属运势指引
-                </p>
-                <div class="result-display" id="fortuneDisplay">
-                    <div class="result-emoji">🌟</div>
+                <p class="feature-desc">基于日期算法的趣味运势生成器，每日更新你的专属运势指引</p>
+                <div class="result-display" id="fortuneDisplay" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">🌟</div>
                     <div class="result-title" id="fortuneLevel">点击生成运势</div>
                     <div class="result-text" id="fortuneText">看看今天的运气如何？</div>
                 </div>
-                <button class="action-button" onclick="generateFortune(event)">
-                    🎯 生成今日运势
-                </button>
+                <button class="action-button" id="fortuneBtn" aria-label="生成今日运势">🎯 生成今日运势</button>
+                <div class="share-section" id="fortuneShare" style="display: none;">
+                    <button class="share-btn" onclick="shareResult('fortune')" aria-label="分享运势结果">📤 分享结果</button>
+                    <button class="share-btn" onclick="copyResult('fortune')" aria-label="复制运势结果">📋 复制</button>
+                </div>
             </div>
 
-            <!-- 赛博抽签 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">🎋</span>
+                    <span class="feature-icon" aria-hidden="true">🎋</span>
                     <h2 class="feature-title">赛博抽签</h2>
                 </div>
-                <p class="feature-desc">
-                    数字化传统御神签，用科技的方式寻求古老智慧指引
-                </p>
-                <div class="result-display" id="omikujiDisplay">
-                    <div class="result-emoji">⛩️</div>
+                <p class="feature-desc">数字化传统御神签，用科技的方式寻求古老智慧指引</p>
+                <div class="result-display" id="omikujiDisplay" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">⛩️</div>
                     <div class="result-title" id="omikujiResult">求签问卜</div>
                     <div class="result-text" id="omikujiAdvice">点击抽取你的今日签文</div>
                 </div>
-                <button class="action-button" onclick="drawOmikuji(event)">
-                    🏮 抽取今日签
-                </button>
+                <button class="action-button" id="omikujiBtn" aria-label="抽取今日签">🏮 抽取今日签</button>
+                <div class="share-section" id="omikujiShare" style="display: none;">
+                    <button class="share-btn" onclick="shareResult('omikuji')" aria-label="分享签文">📤 分享签文</button>
+                    <button class="share-btn" onclick="copyResult('omikuji')" aria-label="复制签文">📋 复制</button>
+                </div>
             </div>
 
-            <!-- 决定助手 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">🎲</span>
+                    <span class="feature-icon" aria-hidden="true">🎲</span>
                     <h2 class="feature-title">决定助手</h2>
                 </div>
-                <p class="feature-desc">
-                    选择困难症福音，让智能随机性帮你做出最佳决定
-                </p>
-                <input type="text" 
-                       class="input-field" 
-                       id="decideInput" 
-                       placeholder="用逗号分隔选项，例如：吃饭，睡觉，打游戏">
-                <button class="action-button" onclick="makeDecision(event)">
-                    帮我决定
-                </button>
-                <div class="result-text" id="decideResult" style="margin-top: 15px; font-size: 18px; color: var(--current-accent); font-weight: 600; min-height: 30px;"></div>
+                <p class="feature-desc">选择困难症福音，让智能随机性帮你做出最佳决定</p>
+                <input type="text" class="input-field" id="decideInput" 
+                       placeholder="用逗号分隔选项，例如：吃饭，睡觉，打游戏"
+                       aria-label="输入选项">
+                <button class="action-button" id="decideBtn" aria-label="帮我决定">帮我决定</button>
+                <div class="result-text" id="decideResult" style="margin-top: 15px; font-size: 18px; color: var(--current-accent); font-weight: 600; min-height: 30px;" aria-live="polite"></div>
             </div>
 
-            <!-- 心理测试 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">💭</span>
+                    <span class="feature-icon" aria-hidden="true">💭</span>
                     <h2 class="feature-title">心理测试</h2>
                 </div>
-                <p class="feature-desc">
-                    简单有趣的心理学测试，探索你的内心世界和性格特质
-                </p>
-                <button class="action-button" onclick="startPsychTest(event)" style="margin-bottom: 15px;">
-                    开始测试
-                </button>
-                <div id="psychTestResult" style="font-size: 14px; color: var(--current-text-sec); line-height: 1.6; min-height: 100px;"></div>
+                <p class="feature-desc">简单有趣的心理学测试，探索你的内心世界和性格特质</p>
+                <button class="action-button" id="psychTestBtn" aria-label="开始心理测试">开始测试</button>
+                <div id="psychTestResult" style="font-size: 14px; color: var(--current-text-sec); line-height: 1.6; min-height: 100px; margin-top: 15px;" aria-live="polite"></div>
             </div>
 
-            <!-- 幸运数字 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">🍀</span>
+                    <span class="feature-icon" aria-hidden="true">🍀</span>
                     <h2 class="feature-title">幸运数字</h2>
                 </div>
-                <p class="feature-desc">
-                    生成你的专属幸运数字，适用于彩票、抽奖等场景
-                </p>
-                <div class="result-display" id="luckyNumberDisplay">
-                    <div class="result-emoji">🎰</div>
+                <p class="feature-desc">生成你的专属幸运数字，适用于彩票、抽奖等场景</p>
+                <div class="result-display" id="luckyNumberDisplay" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">🎰</div>
                     <div class="result-title" id="luckyNumber">--</div>
                     <div class="result-text">你的今日幸运数字</div>
                 </div>
-                <button class="action-button" onclick="generateLuckyNumber(event)">
-                    🎲 生成幸运数字
-                </button>
+                <button class="action-button" id="luckyNumberBtn" aria-label="生成幸运数字">🎲 生成幸运数字</button>
+                <div class="history-section" id="luckyHistory" style="display: none;">
+                    <div class="history-title">📜 历史记录</div>
+                    <div class="history-list" id="luckyHistoryList"></div>
+                </div>
             </div>
 
-            <!-- 硬币抛掷 -->
             <div class="feature-card">
                 <div class="feature-header">
-                    <span class="feature-icon">🪙</span>
+                    <span class="feature-icon" aria-hidden="true">🪙</span>
                     <h2 class="feature-title">硬币抛掷</h2>
                 </div>
-                <p class="feature-desc">
-                    经典硬币抛掷模拟器，用随机性帮你快速做二选一决定
-                </p>
-                <div class="result-display" id="coinDisplay">
-                    <div class="result-emoji">🤔</div>
+                <p class="feature-desc">经典硬币抛掷模拟器，用随机性帮你快速做二选一决定</p>
+                <div class="result-display" id="coinDisplay" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">🤔</div>
                     <div class="result-title" id="coinResult">准备抛掷</div>
                     <div class="result-text">正面还是反面？</div>
                 </div>
-                <button class="action-button" onclick="flipCoin(event)">
-                    🪙 抛掷硬币
-                </button>
+                <button class="action-button" id="coinBtn" aria-label="抛掷硬币">🪙 抛掷硬币</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-header">
+                    <span class="feature-icon" aria-hidden="true">🎨</span>
+                    <h2 class="feature-title">随机颜色</h2>
+                </div>
+                <p class="feature-desc">生成随机配色方案，为你的设计提供灵感</p>
+                <div class="color-preview" id="colorPreview" style="background: linear-gradient(135deg, #0097a7, #58a6ff);"></div>
+                <div class="color-info">
+                    <span class="color-code" id="colorCode">#0097A7</span>
+                    <button class="copy-btn" id="copyColorBtn" aria-label="复制颜色代码">复制</button>
+                </div>
+                <button class="action-button" id="colorBtn" aria-label="生成随机颜色">🎨 生成颜色</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-header">
+                    <span class="feature-icon" aria-hidden="true">🔐</span>
+                    <h2 class="feature-title">密码生成器</h2>
+                </div>
+                <p class="feature-desc">生成安全的随机密码，保护你的账户安全</p>
+                <div class="password-display" id="passwordDisplay" aria-live="polite">点击生成密码</div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                </div>
+                <div class="password-options">
+                    <div class="password-option">
+                        <input type="checkbox" id="uppercase" checked>
+                        <label for="uppercase">大写字母 A-Z</label>
+                    </div>
+                    <div class="password-option">
+                        <input type="checkbox" id="lowercase" checked>
+                        <label for="lowercase">小写字母 a-z</label>
+                    </div>
+                    <div class="password-option">
+                        <input type="checkbox" id="numbers" checked>
+                        <label for="numbers">数字 0-9</label>
+                    </div>
+                    <div class="password-option">
+                        <input type="checkbox" id="symbols" checked>
+                        <label for="symbols">特殊符号</label>
+                    </div>
+                </div>
+                <button class="action-button" id="passwordBtn" aria-label="生成密码">🔐 生成密码</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-header">
+                    <span class="feature-icon" aria-hidden="true">🎯</span>
+                    <h2 class="feature-title">随机点名</h2>
+                </div>
+                <p class="feature-desc">公平公正的随机点名工具，适用于课堂、会议等场景</p>
+                <input type="text" class="input-field" id="namesInput" 
+                       placeholder="输入名字，用逗号分隔"
+                       aria-label="输入名字列表">
+                <button class="action-button" id="pickNameBtn" aria-label="随机点名">🎯 开始点名</button>
+                <div class="result-display" id="nameResult" style="margin-top: 15px; min-height: 80px;" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">👤</div>
+                    <div class="result-title" id="pickedName">等待点名</div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-header">
+                    <span class="feature-icon" aria-hidden="true">⏱️</span>
+                    <h2 class="feature-title">随机计时器</h2>
+                </div>
+                <p class="feature-desc">生成随机倒计时，适用于游戏、抽奖等需要随机时长的场景</p>
+                <div class="result-display" id="timerDisplay" aria-live="polite">
+                    <div class="result-emoji" aria-hidden="true">⏱️</div>
+                    <div class="result-title" id="timerValue">00:00</div>
+                    <div class="result-text" id="timerStatus">设置时间范围后开始</div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <input type="number" class="input-field" id="minTime" placeholder="最小秒数" min="1" max="300" value="5" style="margin-bottom: 0;" aria-label="最小秒数">
+                    <input type="number" class="input-field" id="maxTime" placeholder="最大秒数" min="1" max="300" value="30" style="margin-bottom: 0;" aria-label="最大秒数">
+                </div>
+                <button class="action-button" id="timerBtn" aria-label="开始随机计时">⏱️ 开始计时</button>
             </div>
         </div>
     </div>
 
-    <!-- 返回主页按钮 -->
-    <div class="back-home" onclick="window.location.href='index.html'" title="返回主页">
+    <div class="back-home" onclick="window.location.href='index.html'" title="返回主页" role="button" aria-label="返回主页" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
     </div>
 
-    <!-- JavaScript -->
     <script>
-        // ========== 主题切换 ==========
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        });
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-
-        // ========== 导航栏滚动效果 ==========
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // ========== 创建背景星空 ==========
-        function createBackground() {
-            const container = document.getElementById('bg-container');
-            if (!container) return;
-
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                const size = Math.random() * 2.5 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                container.appendChild(star);
-            }
-        }
-
-        // ========== 粒子爆炸效果 ==========
-        function createParticleExplosion(element) {
-            const rect = element.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
-                document.body.appendChild(particle);
-
-                const angle = (Math.PI * 2 * i) / 30;
-                const velocity = 100 + Math.random() * 100;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity;
-
-                let posX = 0, posY = 0, opacity = 1;
-
-                const animate = () => {
-                    posX += vx * 0.02;
-                    posY += vy * 0.02;
-                    opacity -= 0.02;
-
-                    particle.style.transform = `translate(${posX}px, ${posY}px)`;
-                    particle.style.opacity = opacity;
-
-                    if (opacity > 0) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        particle.remove();
+        const FunLab = {
+            results: {
+                fortune: null,
+                omikuji: null
+            },
+            
+            luckyHistory: JSON.parse(localStorage.getItem('luckyHistory') || '[]'),
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            },
+            
+            init() {
+                this.initTheme();
+                this.initNavbar();
+                this.initBackground();
+                this.bindEvents();
+                this.loadHistory();
+                console.log('%c🎉 趣味功能实验室 v2.0 已加载', 'color: #0097a7; font-size: 14px; font-weight: bold;');
+            },
+            
+            initTheme() {
+                const toggle = document.getElementById('themeToggle');
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+                
+                toggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+                });
+                
+                toggle.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggle.click();
                     }
-                };
-
-                requestAnimationFrame(animate);
-            }
-        }
-
-        // ========== 今日运势 ==========
-        function generateFortune(event) {
-            const button = event.target;
-            button.disabled = true;
-            button.innerHTML = '<span class="loading-spinner"></span> 占卜中...';
-
-            const displayEl = document.getElementById('fortuneDisplay');
-            const levelEl = document.getElementById('fortuneLevel');
-            const textEl = document.getElementById('fortuneText');
-            const emojiEl = displayEl.querySelector('.result-emoji');
-
-            const fortunes = [
-                { level: '大吉', text: '今天是你运势爆棚的一天！无论是工作还是生活，都会顺风顺水。抓住机会，勇敢前行！', emoji: '🌟' },
-                { level: '吉', text: '整体运势不错，可能会有小惊喜。保持积极心态，好运自然来。', emoji: '✨' },
-                { level: '中吉', text: '平平淡淡才是真。今天适合稳扎稳打，不宜冒进。', emoji: '☀️' },
-                { level: '小吉', text: '运势尚可，注意细节会有意外收获。保持耐心，好事多磨。', emoji: '🌈' },
-                { level: '末吉', text: '运势一般，但只要努力也能有所收获。相信坚持的力量！', emoji: '🌱' },
-                { level: '平', text: '不好不坏的一天。按部就班完成计划就好，不必强求。', emoji: '⚖️' },
-                { level: '凶', text: '今天可能会遇到一些小挫折。保持冷静，谨慎行事，避免冲动决定。', emoji: '🌧️' }
-            ];
-
-            // 使用日期作为随机种子，确保每天结果一致
-            const today = new Date().toDateString();
-            const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            const fortune = fortunes[hash % fortunes.length];
-
-            // 动画效果
-            let count = 0;
-            const emojis = ['🌟', '✨', '☀️', '🌈', '🌱', '⚖️', '🌧️'];
-            const interval = setInterval(() => {
-                emojiEl.textContent = emojis[count % emojis.length];
-                count++;
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                emojiEl.textContent = fortune.emoji;
-                levelEl.textContent = fortune.level;
-                textEl.textContent = fortune.text;
-                button.disabled = false;
-                button.textContent = '🎯 生成今日运势';
-                createParticleExplosion(displayEl);
-            }, 1000);
-        }
-
-        // ========== 赛博抽签 ==========
-        function drawOmikuji(event) {
-            const button = event.target;
-            button.disabled = true;
-            button.innerHTML = '<span class="loading-spinner"></span> 抽签中...';
-
-            const displayEl = document.getElementById('omikujiDisplay');
-            const resultEl = document.getElementById('omikujiResult');
-            const adviceEl = document.getElementById('omikujiAdvice');
-            const emojiEl = displayEl.querySelector('.result-emoji');
-
-            const omikuji = [
-                { result: '大吉', advice: '诸事皆宜，百事亨通。今天是你大展身手的好时机，不要犹豫，勇敢追求你的目标！', emoji: '🏆' },
-                { result: '中吉', advice: '运势平稳上升，只要脚踏实地，就能获得成功。适合制定长期计划。', emoji: '📈' },
-                { result: '小吉', advice: '小小的幸运就在身边。留意细节，可能会有意外的小收获。', emoji: '🍀' },
-                { result: '吉', advice: '整体运势良好，保持积极心态，好事自然会发生。', emoji: '✨' },
-                { result: '末吉', advice: '运势需要慢慢积累。不要急躁，耐心等待时机成熟。', emoji: '🌱' },
-                { result: '凶', advice: '今天宜静不宜动，谨言慎行。遇到困难不要硬拼，以退为进是上策。', emoji: '🧘' },
-                { result: '大凶', advice: '诸事需谨慎，避免重大决策。保持低调，修身养性，等待运势转机。', emoji: '🌑' }
-            ];
-
-            let count = 0;
-            const emojis = ['🏆', '📈', '🍀', '✨', '🌱', '🧘', '🌑'];
-            const interval = setInterval(() => {
-                emojiEl.textContent = emojis[count % emojis.length];
-                count++;
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                const result = omikuji[Math.floor(Math.random() * omikuji.length)];
-                emojiEl.textContent = result.emoji;
-                resultEl.textContent = result.result;
-                adviceEl.textContent = result.advice;
-                button.disabled = false;
-                button.textContent = '🏮 抽取今日签';
-                createParticleExplosion(displayEl);
-            }, 1200);
-        }
-
-        // ========== 决定助手 ==========
-        function makeDecision(event) {
-            const input = document.getElementById('decideInput');
-            const resultEl = document.getElementById('decideResult');
-
-            const options = input.value.split(/[,,]/).map(opt => opt.trim()).filter(opt => opt);
-
-            if (options.length < 2) {
-                resultEl.textContent = '⚠️ 请输入至少两个选项，用逗号分隔';
-                resultEl.classList.add('shake');
-                setTimeout(() => resultEl.classList.remove('shake'), 500);
-                return;
-            }
-
-            const button = event.target;
-            button.disabled = true;
-            button.textContent = '🎲 决定中...';
-
-            let count = 0;
-            const interval = setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * options.length);
-                resultEl.textContent = '🎲 ' + options[randomIndex];
-                count++;
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                const selectedIndex = Math.floor(Math.random() * options.length);
-                resultEl.textContent = '🎯 决定结果：' + options[selectedIndex];
-                resultEl.style.animation = 'resultAppear 0.6s ease';
-                button.disabled = false;
-                button.textContent = '帮我决定';
-                createParticleExplosion(resultEl);
-            }, 1000);
-        }
-
-        // ========== 心理测试 ==========
-        function startPsychTest(event) {
-            const tests = [
-                {
-                    question: '如果你可以选择一种超能力，你会选择？',
-                    options: ['飞行', '隐身', '读心术', '时间停止'],
-                    results: [
-                        '你是一个自由奔放的人，向往无拘无束的生活！',
-                        '你比较内向，喜欢观察而不是被关注。',
-                        '你对人性充满好奇，想要了解他人的真实想法。',
-                        '你希望掌控一切，是个很有野心的人！'
-                    ]
-                },
-                {
-                    question: '周末你更愿意？',
-                    options: ['宅在家里', '和朋友聚会', '户外运动', '学习新技能'],
-                    results: [
-                        '你是个享受独处的人，内心丰富而平静。',
-                        '你社交能力强，喜欢与人分享快乐！',
-                        '你充满活力，热爱大自然和冒险！',
-                        '你有上进心，不断提升自己是你的人生信条！'
-                    ]
-                },
-                {
-                    question: '你最喜欢的颜色是？',
-                    options: ['蓝色', '红色', '绿色', '黄色'],
-                    results: [
-                        '你冷静理性，是个值得信赖的人。',
-                        '你热情开朗，总是充满能量！',
-                        '你温和善良，追求和谐的生活。',
-                        '你乐观向上，总能给人带来快乐！'
-                    ]
+                });
+            },
+            
+            initNavbar() {
+                window.addEventListener('scroll', () => {
+                    const navbar = document.getElementById('navbar');
+                    navbar.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            },
+            
+            initBackground() {
+                const container = document.getElementById('bg-container');
+                for (let i = 0; i < 80; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    const size = Math.random() * 2 + 1;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    container.appendChild(star);
                 }
-            ];
+            },
+            
+            bindEvents() {
+                document.getElementById('fortuneBtn').addEventListener('click', (e) => this.generateFortune(e));
+                document.getElementById('omikujiBtn').addEventListener('click', (e) => this.drawOmikuji(e));
+                document.getElementById('decideBtn').addEventListener('click', (e) => this.makeDecision(e));
+                document.getElementById('psychTestBtn').addEventListener('click', (e) => this.startPsychTest(e));
+                document.getElementById('luckyNumberBtn').addEventListener('click', (e) => this.generateLuckyNumber(e));
+                document.getElementById('coinBtn').addEventListener('click', (e) => this.flipCoin(e));
+                document.getElementById('colorBtn').addEventListener('click', () => this.generateColor());
+                document.getElementById('copyColorBtn').addEventListener('click', () => this.copyColor());
+                document.getElementById('passwordBtn').addEventListener('click', () => this.generatePassword());
+                document.getElementById('pickNameBtn').addEventListener('click', (e) => this.pickName(e));
+                document.getElementById('timerBtn').addEventListener('click', () => this.startRandomTimer());
+                
+                document.getElementById('decideInput').addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.makeDecision(e);
+                });
+                document.getElementById('namesInput').addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.pickName(e);
+                });
+            },
+            
+            loadHistory() {
+                this.renderLuckyHistory();
+            },
+            
+            createParticleExplosion(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
 
-            const randomTest = tests[Math.floor(Math.random() * tests.length)];
-            const resultEl = document.getElementById('psychTestResult');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.cssText = `
+                        position: fixed;
+                        left: ${centerX}px;
+                        top: ${centerY}px;
+                        width: 6px;
+                        height: 6px;
+                        background: var(--current-accent);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 10000;
+                    `;
+                    document.body.appendChild(particle);
 
-            resultEl.innerHTML = `
-                <div style="margin-bottom: 15px; font-weight: 600; color: var(--current-text);">${randomTest.question}</div>
-                <div class="options-grid">
-                    ${randomTest.options.map((opt, i) => 
-                        `<button class="option-button" onclick="showTestResult('${randomTest.results[i]}')">${opt}</button>`
-                    ).join('')}
-                </div>
-            `;
-        }
+                    const angle = (Math.PI * 2 * i) / 20;
+                    const velocity = 80 + Math.random() * 60;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
 
-        function showTestResult(result) {
-            const resultEl = document.getElementById('psychTestResult');
-            resultEl.innerHTML = `
-                <div style="background: var(--current-accent-soft); padding: 20px; border-radius: 12px; color: var(--current-text); font-size: 15px; line-height: 1.8;">
-                    💡 ${result}
-                </div>
-            `;
-        }
+                    let posX = 0, posY = 0, opacity = 1;
 
-        // ========== 幸运数字 ==========
-        function generateLuckyNumber(event) {
-            const button = event.target;
-            button.disabled = true;
-            button.innerHTML = '<span class="loading-spinner"></span> 生成中...';
+                    const animate = () => {
+                        posX += vx * 0.02;
+                        posY += vy * 0.02;
+                        opacity -= 0.025;
 
-            const displayEl = document.getElementById('luckyNumberDisplay');
-            const numberEl = document.getElementById('luckyNumber');
-            const emojiEl = displayEl.querySelector('.result-emoji');
+                        particle.style.transform = `translate(${posX}px, ${posY}px)`;
+                        particle.style.opacity = opacity;
 
-            let count = 0;
-            const interval = setInterval(() => {
-                const randomNum = Math.floor(Math.random() * 999) + 1;
-                numberEl.textContent = randomNum.toString().padStart(3, '0');
-                emojiEl.textContent = ['🎰', '🎲', '🍀', '⭐'][count % 4];
-                count++;
-            }, 80);
+                        if (opacity > 0) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            particle.remove();
+                        }
+                    };
 
-            setTimeout(() => {
-                clearInterval(interval);
-                const luckyNumber = Math.floor(Math.random() * 999) + 1;
-                numberEl.textContent = luckyNumber.toString().padStart(3, '0');
-                emojiEl.textContent = '🍀';
-                button.disabled = false;
-                button.textContent = '🎲 生成幸运数字';
-                createParticleExplosion(displayEl);
-            }, 1000);
-        }
-
-        // ========== 硬币抛掷 ==========
-        function flipCoin(event) {
-            const button = event.target;
-            button.disabled = true;
-            button.innerHTML = '<span class="loading-spinner"></span> 抛掷中...';
-
-            const displayEl = document.getElementById('coinDisplay');
-            const resultEl = document.getElementById('coinResult');
-            const emojiEl = displayEl.querySelector('.result-emoji');
-
-            let count = 0;
-            const interval = setInterval(() => {
-                emojiEl.textContent = count % 2 === 0 ? '🪙' : '🎯';
-                resultEl.textContent = count % 2 === 0 ? '正面？' : '反面？';
-                count++;
-            }, 100);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                const isHeads = Math.random() > 0.5;
-                emojiEl.textContent = isHeads ? '✅' : '❌';
-                resultEl.textContent = isHeads ? '正面' : '反面';
-                button.disabled = false;
-                button.textContent = '🪙 抛掷硬币';
-                createParticleExplosion(displayEl);
-            }, 1000);
-        }
-
-        // ========== 键盘快捷键 ==========
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
-                    case 'f':
-                        e.preventDefault();
-                        generateFortune({target: document.querySelector('button[onclick*="generateFortune"]')});
-                        break;
-                    case 'o':
-                        e.preventDefault();
-                        drawOmikuji({target: document.querySelector('button[onclick*="drawOmikuji"]')});
-                        break;
-                    case 'l':
-                        e.preventDefault();
-                        generateLuckyNumber({target: document.querySelector('button[onclick*="generateLuckyNumber"]')});
-                        break;
-                    case 'c':
-                        e.preventDefault();
-                        flipCoin({target: document.querySelector('button[onclick*="flipCoin"]')});
-                        break;
+                    requestAnimationFrame(animate);
                 }
-            }
-        });
+            },
+            
+            generateFortune(event) {
+                const button = event.target;
+                button.disabled = true;
+                button.innerHTML = '<span class="loading-spinner"></span>占卜中...';
 
-        // ========== 初始化 ==========
-        window.addEventListener('load', function() {
-            createBackground();
-            console.log('🎉 趣味功能实验室已加载完成！');
-            console.log('💡 快捷键提示：');
-            console.log('   Ctrl+F - 今日运势');
-            console.log('   Ctrl+O - 赛博抽签');
-            console.log('   Ctrl+L - 幸运数字');
-            console.log('   Ctrl+C - 硬币抛掷');
-        });
+                const displayEl = document.getElementById('fortuneDisplay');
+                const levelEl = document.getElementById('fortuneLevel');
+                const textEl = document.getElementById('fortuneText');
+                const emojiEl = displayEl.querySelector('.result-emoji');
 
-        // ========== 性能优化 ==========
-        document.addEventListener('visibilitychange', function() {
-            const container = document.getElementById('bg-container');
-            if (container) {
-                container.style.animationPlayState = document.hidden ? 'paused' : 'running';
+                const fortunes = [
+                    { level: '大吉', text: '今天是你运势爆棚的一天！无论是工作还是生活，都会顺风顺水。抓住机会，勇敢前行！', emoji: '🌟' },
+                    { level: '吉', text: '整体运势不错，可能会有小惊喜。保持积极心态，好运自然来。', emoji: '✨' },
+                    { level: '中吉', text: '平平淡淡才是真。今天适合稳扎稳打，不宜冒进。', emoji: '☀️' },
+                    { level: '小吉', text: '运势尚可，注意细节会有意外收获。保持耐心，好事多磨。', emoji: '🌈' },
+                    { level: '末吉', text: '运势一般，但只要努力也能有所收获。相信坚持的力量！', emoji: '🌱' },
+                    { level: '平', text: '不好不坏的一天。按部就班完成计划就好，不必强求。', emoji: '⚖️' },
+                    { level: '凶', text: '今天可能会遇到一些小挫折。保持冷静，谨慎行事，避免冲动决定。', emoji: '🌧️' }
+                ];
+
+                const today = new Date().toDateString();
+                const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const fortune = fortunes[hash % fortunes.length];
+
+                let count = 0;
+                const emojis = ['🌟', '✨', '☀️', '🌈', '🌱', '⚖️', '🌧️'];
+                const interval = setInterval(() => {
+                    emojiEl.textContent = emojis[count % emojis.length];
+                    count++;
+                }, 100);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    emojiEl.textContent = fortune.emoji;
+                    levelEl.textContent = fortune.level;
+                    textEl.textContent = fortune.text;
+                    button.disabled = false;
+                    button.textContent = '🎯 生成今日运势';
+                    
+                    this.results.fortune = fortune;
+                    document.getElementById('fortuneShare').style.display = 'flex';
+                    
+                    this.createParticleExplosion(displayEl);
+                }, 1000);
+            },
+            
+            drawOmikuji(event) {
+                const button = event.target;
+                button.disabled = true;
+                button.innerHTML = '<span class="loading-spinner"></span>抽签中...';
+
+                const displayEl = document.getElementById('omikujiDisplay');
+                const resultEl = document.getElementById('omikujiResult');
+                const adviceEl = document.getElementById('omikujiAdvice');
+                const emojiEl = displayEl.querySelector('.result-emoji');
+
+                const omikuji = [
+                    { result: '大吉', advice: '诸事皆宜，百事亨通。今天是你大展身手的好时机！', emoji: '🏆' },
+                    { result: '中吉', advice: '运势平稳上升，脚踏实地就能获得成功。', emoji: '📈' },
+                    { result: '小吉', advice: '小小的幸运就在身边，留意细节可能有意外收获。', emoji: '🍀' },
+                    { result: '吉', advice: '整体运势良好，保持积极心态，好事自然会发生。', emoji: '✨' },
+                    { result: '末吉', advice: '运势需要慢慢积累，不要急躁，耐心等待时机。', emoji: '🌱' },
+                    { result: '凶', advice: '今天宜静不宜动，谨言慎行，以退为进是上策。', emoji: '🧘' },
+                    { result: '大凶', advice: '诸事需谨慎，避免重大决策，修身养性等待转机。', emoji: '🌑' }
+                ];
+
+                let count = 0;
+                const emojis = ['🏆', '📈', '🍀', '✨', '🌱', '🧘', '🌑'];
+                const interval = setInterval(() => {
+                    emojiEl.textContent = emojis[count % emojis.length];
+                    count++;
+                }, 100);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    const result = omikuji[Math.floor(Math.random() * omikuji.length)];
+                    emojiEl.textContent = result.emoji;
+                    resultEl.textContent = result.result;
+                    adviceEl.textContent = result.advice;
+                    button.disabled = false;
+                    button.textContent = '🏮 抽取今日签';
+                    
+                    this.results.omikuji = result;
+                    document.getElementById('omikujiShare').style.display = 'flex';
+                    
+                    this.createParticleExplosion(displayEl);
+                }, 1200);
+            },
+            
+            makeDecision(event) {
+                const input = document.getElementById('decideInput');
+                const resultEl = document.getElementById('decideResult');
+
+                const options = input.value.split(/[,，]/).map(opt => opt.trim()).filter(opt => opt);
+
+                if (options.length < 2) {
+                    resultEl.textContent = '⚠️ 请输入至少两个选项，用逗号分隔';
+                    resultEl.classList.add('shake');
+                    setTimeout(() => resultEl.classList.remove('shake'), 500);
+                    return;
+                }
+
+                const button = event.target;
+                button.disabled = true;
+                button.textContent = '🎲 决定中...';
+
+                let count = 0;
+                const interval = setInterval(() => {
+                    const randomIndex = Math.floor(Math.random() * options.length);
+                    resultEl.textContent = '🎲 ' + this.escapeHtml(options[randomIndex]);
+                    count++;
+                }, 100);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    const selectedIndex = Math.floor(Math.random() * options.length);
+                    resultEl.textContent = '🎯 决定结果：' + this.escapeHtml(options[selectedIndex]);
+                    button.disabled = false;
+                    button.textContent = '帮我决定';
+                    this.createParticleExplosion(resultEl);
+                }, 1000);
+            },
+            
+            startPsychTest(event) {
+                const tests = [
+                    {
+                        question: '如果你可以选择一种超能力，你会选择？',
+                        options: ['飞行', '隐身', '读心术', '时间停止'],
+                        results: [
+                            '你是一个自由奔放的人，向往无拘无束的生活！',
+                            '你比较内向，喜欢观察而不是被关注。',
+                            '你对人性充满好奇，想要了解他人的真实想法。',
+                            '你希望掌控一切，是个很有野心的人！'
+                        ]
+                    },
+                    {
+                        question: '周末你更愿意？',
+                        options: ['宅在家里', '和朋友聚会', '户外运动', '学习新技能'],
+                        results: [
+                            '你是个享受独处的人，内心丰富而平静。',
+                            '你社交能力强，喜欢与人分享快乐！',
+                            '你充满活力，热爱大自然和冒险！',
+                            '你有上进心，不断提升自己是你的人生信条！'
+                        ]
+                    },
+                    {
+                        question: '你最喜欢的颜色是？',
+                        options: ['蓝色', '红色', '绿色', '黄色'],
+                        results: [
+                            '你冷静理性，是个值得信赖的人。',
+                            '你热情开朗，总是充满能量！',
+                            '你温和善良，追求和谐的生活。',
+                            '你乐观向上，总能给人带来快乐！'
+                        ]
+                    }
+                ];
+
+                const randomTest = tests[Math.floor(Math.random() * tests.length)];
+                const resultEl = document.getElementById('psychTestResult');
+
+                const optionsHtml = randomTest.options.map((opt, i) => 
+                    `<button class="option-button" data-index="${i}">${this.escapeHtml(opt)}</button>`
+                ).join('');
+
+                resultEl.innerHTML = `
+                    <div style="margin-bottom: 15px; font-weight: 600; color: var(--current-text);">${this.escapeHtml(randomTest.question)}</div>
+                    <div class="options-grid">${optionsHtml}</div>
+                `;
+
+                resultEl.querySelectorAll('.option-button').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const index = parseInt(btn.dataset.index);
+                        this.showTestResult(randomTest.results[index]);
+                    });
+                });
+            },
+            
+            showTestResult(result) {
+                const resultEl = document.getElementById('psychTestResult');
+                resultEl.innerHTML = `
+                    <div style="background: var(--current-accent-soft); padding: 20px; border-radius: 12px; color: var(--current-text); font-size: 15px; line-height: 1.8;">
+                        💡 ${this.escapeHtml(result)}
+                    </div>
+                `;
+            },
+            
+            generateLuckyNumber(event) {
+                const button = event.target;
+                button.disabled = true;
+                button.innerHTML = '<span class="loading-spinner"></span>生成中...';
+
+                const displayEl = document.getElementById('luckyNumberDisplay');
+                const numberEl = document.getElementById('luckyNumber');
+                const emojiEl = displayEl.querySelector('.result-emoji');
+
+                let count = 0;
+                const interval = setInterval(() => {
+                    const randomNum = Math.floor(Math.random() * 999) + 1;
+                    numberEl.textContent = randomNum.toString().padStart(3, '0');
+                    emojiEl.textContent = ['🎰', '🎲', '🍀', '⭐'][count % 4];
+                    count++;
+                }, 80);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    const luckyNumber = Math.floor(Math.random() * 999) + 1;
+                    numberEl.textContent = luckyNumber.toString().padStart(3, '0');
+                    emojiEl.textContent = '🍀';
+                    button.disabled = false;
+                    button.textContent = '🎲 生成幸运数字';
+                    
+                    this.luckyHistory.unshift({
+                        number: luckyNumber.toString().padStart(3, '0'),
+                        time: new Date().toLocaleTimeString()
+                    });
+                    if (this.luckyHistory.length > 5) this.luckyHistory.pop();
+                    localStorage.setItem('luckyHistory', JSON.stringify(this.luckyHistory));
+                    this.renderLuckyHistory();
+                    
+                    this.createParticleExplosion(displayEl);
+                }, 1000);
+            },
+            
+            renderLuckyHistory() {
+                const historySection = document.getElementById('luckyHistory');
+                const historyList = document.getElementById('luckyHistoryList');
+                
+                if (this.luckyHistory.length > 0) {
+                    historySection.style.display = 'block';
+                    historyList.innerHTML = this.luckyHistory.map(item => 
+                        `<span class="history-item">${this.escapeHtml(item.number)}</span>`
+                    ).join('');
+                }
+            },
+            
+            flipCoin(event) {
+                const button = event.target;
+                button.disabled = true;
+                button.innerHTML = '<span class="loading-spinner"></span>抛掷中...';
+
+                const displayEl = document.getElementById('coinDisplay');
+                const resultEl = document.getElementById('coinResult');
+                const emojiEl = displayEl.querySelector('.result-emoji');
+
+                let count = 0;
+                const interval = setInterval(() => {
+                    emojiEl.textContent = count % 2 === 0 ? '🪙' : '🎯';
+                    resultEl.textContent = count % 2 === 0 ? '正面？' : '反面？';
+                    count++;
+                }, 100);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    const isHeads = Math.random() > 0.5;
+                    emojiEl.textContent = isHeads ? '✅' : '❌';
+                    resultEl.textContent = isHeads ? '正面' : '反面';
+                    button.disabled = false;
+                    button.textContent = '🪙 抛掷硬币';
+                    this.createParticleExplosion(displayEl);
+                }, 1000);
+            },
+            
+            generateColor() {
+                const randomColor = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                const color1 = randomColor();
+                const color2 = randomColor();
+                
+                const preview = document.getElementById('colorPreview');
+                const codeEl = document.getElementById('colorCode');
+                
+                preview.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+                codeEl.textContent = `${color1.toUpperCase()} → ${color2.toUpperCase()}`;
+                
+                this.currentColor = { color1, color2 };
+            },
+            
+            copyColor() {
+                if (this.currentColor) {
+                    navigator.clipboard.writeText(`${this.currentColor.color1}, ${this.currentColor.color2}`);
+                    const btn = document.getElementById('copyColorBtn');
+                    btn.textContent = '已复制!';
+                    setTimeout(() => btn.textContent = '复制', 1500);
+                }
+            },
+            
+            generatePassword() {
+                const length = 16;
+                const uppercase = document.getElementById('uppercase').checked;
+                const lowercase = document.getElementById('lowercase').checked;
+                const numbers = document.getElementById('numbers').checked;
+                const symbols = document.getElementById('symbols').checked;
+                
+                let chars = '';
+                if (uppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                if (lowercase) chars += 'abcdefghijklmnopqrstuvwxyz';
+                if (numbers) chars += '0123456789';
+                if (symbols) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+                
+                if (!chars) {
+                    document.getElementById('passwordDisplay').textContent = '请至少选择一种字符类型';
+                    return;
+                }
+                
+                let password = '';
+                const array = new Uint32Array(length);
+                crypto.getRandomValues(array);
+                for (let i = 0; i < length; i++) {
+                    password += chars[array[i] % chars.length];
+                }
+                
+                document.getElementById('passwordDisplay').textContent = password;
+                
+                let strength = 0;
+                if (uppercase) strength++;
+                if (lowercase) strength++;
+                if (numbers) strength++;
+                if (symbols) strength++;
+                
+                const bar = document.getElementById('passwordStrengthBar');
+                bar.className = 'password-strength-bar';
+                if (strength <= 1) bar.classList.add('strength-weak');
+                else if (strength <= 2) bar.classList.add('strength-medium');
+                else bar.classList.add('strength-strong');
+            },
+            
+            pickName(event) {
+                const input = document.getElementById('namesInput');
+                const names = input.value.split(/[,，]/).map(n => n.trim()).filter(n => n);
+                
+                if (names.length < 2) {
+                    document.getElementById('pickedName').textContent = '请输入至少两个名字';
+                    return;
+                }
+                
+                const button = event.target;
+                button.disabled = true;
+                button.textContent = '🎯 点名中...';
+                
+                const resultEl = document.getElementById('pickedName');
+                let count = 0;
+                
+                const interval = setInterval(() => {
+                    resultEl.textContent = names[Math.floor(Math.random() * names.length)];
+                    count++;
+                }, 80);
+                
+                setTimeout(() => {
+                    clearInterval(interval);
+                    const selected = names[Math.floor(Math.random() * names.length)];
+                    resultEl.textContent = selected;
+                    button.disabled = false;
+                    button.textContent = '🎯 开始点名';
+                    this.createParticleExplosion(document.getElementById('nameResult'));
+                }, 1000);
+            },
+            
+            startRandomTimer() {
+                const minTime = parseInt(document.getElementById('minTime').value) || 5;
+                const maxTime = parseInt(document.getElementById('maxTime').value) || 30;
+                
+                if (minTime >= maxTime) {
+                    document.getElementById('timerStatus').textContent = '最小值必须小于最大值';
+                    return;
+                }
+                
+                const randomSeconds = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+                let remaining = randomSeconds;
+                
+                const button = document.getElementById('timerBtn');
+                button.disabled = true;
+                button.textContent = '⏱️ 计时中...';
+                
+                document.getElementById('timerStatus').textContent = `随机时长: ${randomSeconds}秒`;
+                
+                const timerInterval = setInterval(() => {
+                    remaining--;
+                    const mins = Math.floor(remaining / 60);
+                    const secs = remaining % 60;
+                    document.getElementById('timerValue').textContent = 
+                        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    
+                    if (remaining <= 0) {
+                        clearInterval(timerInterval);
+                        document.getElementById('timerStatus').textContent = '⏰ 时间到!';
+                        button.disabled = false;
+                        button.textContent = '⏱️ 开始计时';
+                        this.createParticleExplosion(document.getElementById('timerDisplay'));
+                    }
+                }, 1000);
             }
-        });
+        };
+
+        function shareResult(type) {
+            const result = FunLab.results[type];
+            if (!result) return;
+            
+            let text = '';
+            if (type === 'fortune') {
+                text = `🔮 今日运势: ${result.level}\n${result.text}\n——来自熊泽城趣味功能实验室`;
+            } else if (type === 'omikuji') {
+                text = `🎋 今日签文: ${result.result}\n${result.advice}\n——来自熊泽城趣味功能实验室`;
+            }
+            
+            if (navigator.share) {
+                navigator.share({ title: '趣味功能结果', text: text });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert('结果已复制到剪贴板！');
+            }
+        }
+
+        function copyResult(type) {
+            const result = FunLab.results[type];
+            if (!result) return;
+            
+            let text = '';
+            if (type === 'fortune') {
+                text = `今日运势: ${result.level} - ${result.text}`;
+            } else if (type === 'omikuji') {
+                text = `今日签文: ${result.result} - ${result.advice}`;
+            }
+            
+            navigator.clipboard.writeText(text);
+            alert('已复制！');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => FunLab.init());
     </script>
 </body>
 </html>
