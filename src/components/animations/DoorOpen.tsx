@@ -13,9 +13,17 @@ export default function DoorOpen({ onComplete, isActive }: DoorOpenProps) {
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive || hasAnimatedRef.current) return;
+    hasAnimatedRef.current = true;
+
+    const left = leftRef.current;
+    const right = rightRef.current;
+    const overlay = overlayRef.current;
+
+    if (!left || !right || !overlay) return;
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -23,18 +31,32 @@ export default function DoorOpen({ onComplete, isActive }: DoorOpenProps) {
       },
     });
 
-    tl.to([leftRef.current, rightRef.current], {
-      scaleX: 0,
-      duration: 1.5,
-      ease: 'power2.inOut',
-      stagger: 0.1,
-      transformOrigin: 'left center',
-    })
-      .to(overlayRef.current, {
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-      }, '-=0.3');
+    tl.set([left, right], { scaleX: 1 })
+      .to(left, {
+        scaleX: 0,
+        duration: 1.2,
+        ease: 'power2.inOut',
+        transformOrigin: 'left center',
+      })
+      .to(
+        right,
+        {
+          scaleX: 0,
+          duration: 1.2,
+          ease: 'power2.inOut',
+          transformOrigin: 'right center',
+        },
+        '<'
+      )
+      .to(
+        overlay,
+        {
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.2'
+      );
 
     return () => {
       tl.kill();
@@ -45,14 +67,14 @@ export default function DoorOpen({ onComplete, isActive }: DoorOpenProps) {
 
   return (
     <div ref={overlayRef} className={styles.overlay}>
-      <div className={styles.doorLeft} ref={leftRef}>
-        <div className={styles.doorInner}>
-          <span className={styles.doorText}>A</span>
+      <div className={styles.doorContainer}>
+        <div ref={leftRef} className={styles.doorLeft}>
+          <div className={styles.doorGradient} />
+          <div className={styles.doorShine} />
         </div>
-      </div>
-      <div className={styles.doorRight} ref={rightRef}>
-        <div className={styles.doorInner}>
-          <span className={styles.doorText}>P</span>
+        <div ref={rightRef} className={styles.doorRight}>
+          <div className={styles.doorGradient} />
+          <div className={styles.doorShine} />
         </div>
       </div>
     </div>
