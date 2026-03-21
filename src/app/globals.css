@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --primary-white: #FFFFFF;
+  --secondary-white: #F8F9FA;
+  --gradient-start: #667EEA;
+  --gradient-mid: #764BA2;
+  --gradient-end: #F093FB;
+  --text-primary: #1A1A2E;
+  --text-secondary: #4A4A68;
+  --accent-glow: rgba(102, 126, 234, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--secondary-white) 100%);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--primary-white);
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.glow-effect {
+  box-shadow: 0 0 40px var(--accent-glow), 0 0 80px var(--accent-glow);
+}
+
+.page-transition {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+  50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px var(--accent-glow); }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gradient-start), var(--gradient-end));
+  border-radius: 4px;
+}
