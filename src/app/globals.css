@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
-:root {
-  --primary-white: #FFFFFF;
-  --secondary-white: #F8F9FA;
-  --gradient-start: #667EEA;
-  --gradient-mid: #764BA2;
-  --gradient-end: #F093FB;
-  --text-primary: #1A1A2E;
-  --text-secondary: #4A4A68;
-  --accent-glow: rgba(102, 126, 234, 0.15);
+@theme {
+  --color-primary-white: #FFFFFF;
+  --color-secondary-white: #F8F9FA;
+  --color-gradient-start: #667EEA;
+  --color-gradient-mid: #764BA2;
+  --color-gradient-end: #F093FB;
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #4A4A68;
+  --color-accent-glow: rgba(102, 126, 234, 0.15);
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
 }
 
 * {
@@ -22,12 +25,13 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, var(--primary-white) 0%, var(--secondary-white) 50%, var(--primary-white) 100%);
-  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  background: linear-gradient(135deg, var(--color-primary-white) 0%, var(--color-secondary-white) 50%, var(--color-primary-white) 100%);
+  color: var(--color-text-primary);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 a {
@@ -37,10 +41,11 @@ a {
 
 button {
   font-family: inherit;
+  cursor: pointer;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-mid), var(--color-gradient-end));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -51,14 +56,55 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary-white);
+  background: var(--color-secondary-white);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--gradient-start), var(--gradient-end));
+  background: linear-gradient(var(--color-gradient-start), var(--color-gradient-end));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(var(--gradient-mid), var(--gradient-end));
+  background: linear-gradient(var(--color-gradient-mid), var(--color-gradient-end));
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
 }
