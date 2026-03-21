@@ -9,30 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^15.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "three": "^0.172.0",
-    "@react-three/fiber": "^9.0.0",
-    "@react-three/drei": "^10.0.0",
-    "gsap": "^3.12.5",
-    "framer-motion": "^12.0.0",
-    "particles.js": "^2.0.0",
-    "animejs": "^3.2.2",
-    "locomotive-scroll": "^5.0.0",
-    "vanilla-tilt": "^1.8.1",
-    "lucide-react": "^0.469.0",
-    "zustand": "^5.0.0"
+    "next": "15.1.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "three": "0.160.0",
+    "@react-three/fiber": "9.0.0",
+    "@react-three/drei": "10.0.0",
+    "gsap": "3.12.5",
+    "framer-motion": "11.15.0",
+    "animejs": "3.2.2",
+    "locomotive-scroll": "5.0.0",
+    "vanilla-tilt": "1.8.1",
+    "zustand": "5.0.0",
+    "lucide-react": "0.468.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@types/three": "^0.172.0",
-    "typescript": "^5.7.0",
-    "tailwindcss": "^4.0.0",
-    "@tailwindcss/postcss": "^4.0.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^15.1.0"
+    "@types/node": "22.0.0",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
+    "@types/three": "0.160.0",
+    "typescript": "5.7.0",
+    "tailwindcss": "4.0.0",
+    "@tailwindcss/postcss": "4.0.0",
+    "eslint": "9.0.0",
+    "eslint-config-next": "15.1.0"
   }
 }

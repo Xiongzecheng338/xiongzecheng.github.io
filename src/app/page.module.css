@@ -1,0 +1,99 @@
+.main {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 50%, #FFFFFF 100%);
+  overflow: hidden;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.titleContainer {
+  text-align: center;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667EEA, #764BA2, #F093FB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #4A4A68;
+  margin: 1rem 0 0 0;
+}
+
+.skipButton {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 200;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  color: #4A4A68;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.skipButton:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: #1A1A2E;
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 50%, #FFFFFF 100%);
+  z-index: 300;
+}
+
+.loading p {
+  margin-top: 1rem;
+  color: #4A4A68;
+  font-size: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(102, 126, 234, 0.1);
+  border-top-color: #667EEA;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+}

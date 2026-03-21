@@ -22,10 +22,21 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: linear-gradient(135deg, var(--primary-white) 0%, var(--secondary-white) 100%);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--secondary-white) 50%, var(--primary-white) 100%);
   color: var(--text-primary);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
 }
 
 .gradient-text {
@@ -33,54 +44,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.gradient-border {
-  position: relative;
-  background: var(--primary-white);
-  border-radius: 1rem;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  border-radius: 1rem;
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-.glow-effect {
-  box-shadow: 0 0 40px var(--accent-glow), 0 0 80px var(--accent-glow);
-}
-
-.page-transition {
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
-  50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px var(--accent-glow); }
 }
 
 ::-webkit-scrollbar {
@@ -94,4 +57,8 @@ body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(var(--gradient-start), var(--gradient-end));
   border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--gradient-mid), var(--gradient-end));
 }

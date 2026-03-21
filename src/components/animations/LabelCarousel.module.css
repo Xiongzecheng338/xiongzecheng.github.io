@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  padding: 1rem;
+}
+
+.label {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667EEA, #764BA2, #F093FB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

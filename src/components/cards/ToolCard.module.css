@@ -1,0 +1,49 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1A1A2E;
+  margin: 0 0 0.25rem 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: #4A4A68;
+  margin: 0;
+}
+
+.category {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+  color: #4A4A68;
+  text-transform: capitalize;
+}

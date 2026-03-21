@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1A1A2E;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: linear-gradient(135deg, #667EEA, #764BA2, #F093FB);
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.highlight {
+  background: linear-gradient(135deg, #667EEA, #764BA2, #F093FB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 2rem;
+  }
+}

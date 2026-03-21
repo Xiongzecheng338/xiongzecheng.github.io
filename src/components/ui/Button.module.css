@@ -1,0 +1,49 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.primary {
+  background: linear-gradient(135deg, #667EEA, #764BA2, #F093FB);
+  color: white;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.primary:hover {
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+}
+
+.secondary {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+  color: #1A1A2E;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.outline {
+  background: transparent;
+  color: #1A1A2E;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+}
+
+.sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.md {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
