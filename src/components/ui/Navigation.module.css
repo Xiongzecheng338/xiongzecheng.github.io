@@ -82,6 +82,12 @@
   width: 100%;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .socials {
   display: flex;
   gap: 1rem;
@@ -193,7 +199,7 @@
     display: none;
   }
 
-  .socials {
+  .actions {
     display: none;
   }
 

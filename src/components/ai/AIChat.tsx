@@ -23,11 +23,15 @@ export default function AIChat({ className }: AIChatProps) {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [aiEnabled, setAiEnabled] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setAiEnabled(isAIEnabled());
-    if (messages.length === 0) {
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialized && messages.length === 0) {
       setMessages([{
         id: 'welcome',
         role: 'assistant',
@@ -35,8 +39,9 @@ export default function AIChat({ className }: AIChatProps) {
         timestamp: new Date(),
         source: 'system',
       }]);
+      setIsInitialized(true);
     }
-  }, []);
+  }, [isInitialized, messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

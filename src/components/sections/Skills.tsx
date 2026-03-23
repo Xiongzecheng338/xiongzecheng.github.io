@@ -2,32 +2,11 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './Skills.module.css';
 
-const skillCategories = [
-  {
-    title: 'Frontend',
-    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Three.js', 'GSAP'],
-    color: '#00d4ff',
-  },
-  {
-    title: 'Backend',
-    skills: ['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Redis'],
-    color: '#bf5af2',
-  },
-  {
-    title: 'AI & Data',
-    skills: ['Machine Learning', 'Data Analysis', 'Pandas', 'PyTorch', 'NLP', 'Computer Vision'],
-    color: '#ff375f',
-  },
-  {
-    title: 'DevOps & Tools',
-    skills: ['Git', 'Docker', 'Linux', 'AWS', 'CI/CD', 'Vercel'],
-    color: '#30d158',
-  },
-];
-
 export default function Skills() {
+  const { t, language } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -35,6 +14,29 @@ export default function Skills() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+
+  const skillCategories = [
+    {
+      title: t.skills.categories.frontend,
+      skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Three.js', 'GSAP'],
+      color: '#00d4ff',
+    },
+    {
+      title: t.skills.categories.backend,
+      skills: ['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Redis'],
+      color: '#bf5af2',
+    },
+    {
+      title: t.skills.categories.ai,
+      skills: ['Machine Learning', 'Data Analysis', 'Pandas', 'PyTorch', 'NLP', 'Computer Vision'],
+      color: '#ff375f',
+    },
+    {
+      title: t.skills.categories.devops,
+      skills: ['Git', 'Docker', 'Linux', 'AWS', 'CI/CD', 'Vercel'],
+      color: '#30d158',
+    },
+  ];
 
   return (
     <section ref={containerRef} className={styles.skills}>
@@ -46,9 +48,9 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.label}>技术栈</span>
+          <span className={styles.label}>{t.skills.label}</span>
           <h2 className={styles.title}>
-            <span className="gradient-text">技能</span>标签云
+            <span className="gradient-text">{t.skills.title}</span>{language === 'zh' ? '标签云' : ' Cloud'}
           </h2>
         </motion.div>
 

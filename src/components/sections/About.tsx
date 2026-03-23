@@ -1,16 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './About.module.css';
 
-const timeline = [
-  { year: '20XX', title: '入学数据科学专业', desc: '开始系统学习数据科学与大数据技术' },
-  { year: '20XX', title: '全栈开发之路', desc: '从前端到后端，拥抱AI辅助开发' },
-  { year: '20XX', title: '开源贡献者', desc: '积极参与开源项目，贡献代码' },
-  { year: 'Now', title: 'AI时代探索者', desc: '探索前沿技术，做时代的弄潮儿' },
-];
-
 export default function About() {
+  const { t, language } = useLanguage();
+
+  const timelineData = t.about.timeline;
+
   return (
     <section id="about" className={styles.about}>
       <div className={styles.container}>
@@ -21,9 +19,9 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.label}>关于我</span>
+          <span className={styles.label}>{t.about.label}</span>
           <h2 className={styles.title}>
-            <span className="gradient-text">全栈</span>开发者
+            <span className="gradient-text">{t.about.title}</span>{language === 'zh' ? '开发者' : ' Developer'}
           </h2>
         </motion.div>
 
@@ -36,13 +34,32 @@ export default function About() {
             transition={{ duration: 0.6 }}
           >
             <p className={styles.bio}>
-              你好！我是 <span className={styles.highlight}>badhope</span>，
-              一名来自深圳的<span className={styles.highlight}>全栈开发者</span>。
-              数据科学与大数据技术专业背景，热衷于用代码创造价值。
+              {language === 'zh' ? (
+                <>
+                  你好！我是 <span className={styles.highlight}>badhope</span>，
+                  一名来自深圳的<span className={styles.highlight}>全栈开发者</span>。
+                  数据科学与大数据技术专业背景，热衷于用代码创造价值。
+                </>
+              ) : (
+                <>
+                  Hello! I am <span className={styles.highlight}>badhope</span>,
+                  a <span className={styles.highlight}>full-stack developer</span> from Shenzhen.
+                  With a background in Data Science and Big Data Technology, I am passionate about creating value through code.
+                </>
+              )}
             </p>
             <p className={styles.bio}>
-              我是 <span className={styles.highlight}>AI时代探索者</span>，
-              坚信AI是提升生产力的关键。善用AI辅助开发，追求技术卓越。
+              {language === 'zh' ? (
+                <>
+                  我是 <span className={styles.highlight}>AI时代探索者</span>，
+                  坚信AI是提升生产力的关键。善用AI辅助开发，追求技术卓越。
+                </>
+              ) : (
+                <>
+                  I am an <span className={styles.highlight}>AI Era Explorer</span>,
+                  convinced that AI is key to boosting productivity. I leverage AI-assisted development and pursue technical excellence.
+                </>
+              )}
             </p>
           </motion.div>
 
@@ -54,9 +71,9 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {[
-              { value: '100+', label: 'GitHub Stars' },
-              { value: '50+', label: '项目数' },
-              { value: '10+', label: '开源贡献' },
+              { value: '100+', label: t.about.stats.githubStars },
+              { value: '50+', label: t.about.stats.projects },
+              { value: '10+', label: t.about.stats.contributions },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -77,7 +94,7 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {timeline.map((item, i) => (
+          {timelineData.map((item, i) => (
             <motion.div
               key={item.year}
               className={styles.timelineItem}

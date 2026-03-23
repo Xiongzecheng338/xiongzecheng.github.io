@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './NetworkStatus.module.css';
 
 export default function NetworkStatus() {
+  const { language } = useLanguage();
   const [isOnline, setIsOnline] = useState(true);
   const [showBanner, setShowBanner] = useState(false);
+
+  const isZh = language === 'zh';
 
   useEffect(() => {
     const handleOnline = () => {
@@ -39,10 +43,16 @@ export default function NetworkStatus() {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
+          role="alert"
+          aria-live="assertive"
         >
           <span className={styles.icon}>⚡</span>
-          <span>网络连接已断开，部分功能可能不可用</span>
-          <button className={styles.dismiss} onClick={() => setShowBanner(false)}>
+          <span>{isZh ? '网络连接已断开，部分功能可能不可用' : 'Network connection lost. Some features may be unavailable.'}</span>
+          <button
+            className={styles.dismiss}
+            onClick={() => setShowBanner(false)}
+            aria-label={isZh ? '关闭提示' : 'Dismiss'}
+          >
             ✕
           </button>
         </motion.div>

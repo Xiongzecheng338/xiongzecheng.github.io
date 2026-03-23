@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './Footer.module.css';
 
 const socialLinks = [
@@ -10,16 +11,18 @@ const socialLinks = [
   { label: 'Email', href: 'mailto:x18825407105@outlook.com', icon: '📧' },
 ];
 
-const navLinks = [
-  { label: '首页', href: '/' },
-  { label: '关于', href: '/#about' },
-  { label: '项目', href: '/#projects' },
-  { label: '博客', href: '/blog' },
-  { label: '工具', href: '/tools' },
-  { label: '简历', href: '/resume' },
-];
-
 export default function Footer() {
+  const { t, language } = useLanguage();
+
+  const navLinks = [
+    { label: t.nav.home, href: '/' },
+    { label: t.nav.about, href: '/#about' },
+    { label: t.nav.projects, href: '/#projects' },
+    { label: t.nav.blog, href: '/blog' },
+    { label: t.nav.tools, href: '/tools' },
+    { label: t.nav.resume, href: '/resume' },
+  ];
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -38,12 +41,14 @@ export default function Footer() {
               <span className={styles.logoBracket}>{"}"}</span>
             </div>
             <p className={styles.tagline}>
-              全栈开发者 · AI时代探索者 · 开源贡献者
+              {language === 'zh'
+                ? '全栈开发者 · AI时代探索者 · 开源贡献者'
+                : 'Full-Stack Developer · AI Era Explorer · Open Source Contributor'}
             </p>
           </div>
 
           <div className={styles.navSection}>
-            <span className={styles.navTitle}>导航</span>
+            <span className={styles.navTitle}>{language === 'zh' ? '导航' : 'Navigation'}</span>
             <div className={styles.navLinks}>
               {navLinks.map((link) => (
                 <a key={link.href} href={link.href} className={styles.navLink}>
@@ -54,7 +59,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.socialSection}>
-            <span className={styles.navTitle}>社交</span>
+            <span className={styles.navTitle}>{language === 'zh' ? '社交' : 'Social'}</span>
             <div className={styles.socialLinks}>
               {socialLinks.map((link) => (
                 <a
@@ -89,7 +94,7 @@ export default function Footer() {
             <span className={styles.location}>深圳 · 广东 · 中国</span>
           </div>
           <div className={styles.build}>
-            <span className={styles.buildLabel}>Built with</span>
+            <span className={styles.buildLabel}>{t.footer.builtWith}</span>
             <span className={styles.buildTech}>Next.js · TypeScript · Framer Motion</span>
           </div>
         </motion.div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './Comments.module.css';
 
 interface CommentsProps {
@@ -8,9 +9,12 @@ interface CommentsProps {
 }
 
 export default function Comments({ className }: CommentsProps) {
+  const { language } = useLanguage();
   const commentsRef = useRef<HTMLDivElement>(null);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const isZh = language === 'zh';
 
   useEffect(() => {
     if (!commentsRef.current || commentsRef.current.hasAttribute('data-giscus')) return;
@@ -34,7 +38,7 @@ export default function Comments({ className }: CommentsProps) {
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
     script.setAttribute('data-theme', 'dark');
-    script.setAttribute('data-lang', 'zh-CN');
+    script.setAttribute('data-lang', isZh ? 'zh-CN' : 'en');
     script.setAttribute('data-loading', 'lazy');
     script.crossOrigin = 'anonymous';
     script.async = true;
@@ -55,30 +59,30 @@ export default function Comments({ className }: CommentsProps) {
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoading]);
+  }, [isLoading, isZh]);
 
   return (
     <div className={`${styles.container} ${className || ''}`}>
       <div className={styles.header}>
         <h3 className={styles.title}>
           <span className={styles.icon}>💬</span>
-          评论
+          {isZh ? '评论' : 'Comments'}
         </h3>
         <p className={styles.subtitle}>
-          使用 GitHub 账号登录后发表评论
+          {isZh ? '使用 GitHub 账号登录后发表评论' : 'Sign in with GitHub to comment'}
         </p>
       </div>
 
       {loadError ? (
         <div className={styles.fallback}>
-          <p>评论服务暂时不可用</p>
+          <p>{isZh ? '评论服务暂时不可用' : 'Comments service temporarily unavailable'}</p>
           <a
             href="https://github.com/badhope/github.io/discussions"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.fallbackLink}
           >
-            前往 GitHub Discussions 评论
+            {isZh ? '前往 GitHub Discussions 评论' : 'Go to GitHub Discussions'}
           </a>
         </div>
       ) : (

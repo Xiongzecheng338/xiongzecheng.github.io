@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import styles from './Hero.module.css';
 
 const ThreeScene = dynamic(() => import('@/components/3d/ThreeScene'), {
@@ -14,19 +15,12 @@ const ThreeScene = dynamic(() => import('@/components/3d/ThreeScene'), {
   ),
 });
 
-const titles = [
-  '全栈开发者',
-  'AI时代探索者',
-  '开源贡献者',
-  '数据工程师',
-];
-
 const symbols = ['< >', '{ }', '[ ]', '( )', '/ *', '=>', '&&', '||'];
 
 export default function Hero() {
+  const { t, language } = useLanguage();
   const [titleIndex, setTitleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
   const [cursorVisible, setCursorVisible] = useState(true);
 
   useEffect(() => {
@@ -37,13 +31,13 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+    const titles = t.hero.titles;
     const currentText = titles[titleIndex];
     setDisplayedText('');
-    setIsTyping(true);
 
     let charIndex = 0;
-    const typeSpeed = 100;
-    const eraseSpeed = 50;
+    const typeSpeed = language === 'zh' ? 100 : 80;
+    const eraseSpeed = language === 'zh' ? 50 : 40;
     const pauseDuration = 2000;
 
     const type = () => {
@@ -52,7 +46,6 @@ export default function Hero() {
         charIndex++;
         setTimeout(type, typeSpeed);
       } else {
-        setIsTyping(false);
         setTimeout(() => {
           erase();
         }, pauseDuration);
@@ -71,7 +64,7 @@ export default function Hero() {
 
     const timeout = setTimeout(type, 500);
     return () => clearTimeout(timeout);
-  }, [titleIndex]);
+  }, [titleIndex, t.hero.titles, language]);
 
   return (
     <section className={styles.hero}>
@@ -101,7 +94,7 @@ export default function Hero() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          badhope
+          {t.hero.name}
         </motion.h1>
 
         <motion.div
@@ -159,7 +152,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 212, 255, 0.5)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>探索更多</span>
+            <span>{language === 'zh' ? '探索更多' : 'Explore More'}</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M7 17L17 7M17 7H7M17 7V17"/>
             </svg>
@@ -174,7 +167,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>查看项目</span>
+            <span>{language === 'zh' ? '查看项目' : 'View Projects'}</span>
           </motion.a>
         </motion.div>
       </motion.div>
@@ -190,7 +183,7 @@ export default function Hero() {
           animate={{ scaleY: [1, 0.5, 1], opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         />
-        <span className={styles.scrollText}>向下滚动</span>
+        <span className={styles.scrollText}>{t.hero.scrollHint}</span>
       </motion.div>
     </section>
   );

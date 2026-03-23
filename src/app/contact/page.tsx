@@ -6,16 +6,6 @@ import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/sections/Footer';
 import styles from './page.module.css';
 
-const navItems = [
-  { label: '首页', href: '/' },
-  { label: '关于', href: '/#about' },
-  { label: '项目', href: '/#projects' },
-  { label: '博客', href: '/blog' },
-  { label: '工具', href: '/tools' },
-  { label: '简历', href: '/resume' },
-  { label: '联系', href: '/contact' },
-];
-
 const socials = [
   { platform: 'GitHub', url: 'https://github.com/badhope', icon: '🐙', desc: '开源项目与代码' },
   { platform: 'CSDN', url: 'https://blog.csdn.net/weixin_56622231', icon: '📚', desc: '技术博客文章' },
@@ -34,7 +24,7 @@ export default function ContactPage() {
 
   return (
     <div className={styles.page}>
-      <Navigation items={navItems} />
+      <Navigation />
 
       <main className={styles.main}>
         <section className={styles.hero}>

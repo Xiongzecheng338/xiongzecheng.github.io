@@ -27,13 +27,6 @@ const categories = [
   { id: 'devops', label: 'DevOps' },
 ];
 
-const navItems = [
-  { label: 'Home', href: '/home' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Tools', href: '#tools' },
-  { label: 'Contact', href: '/contact' },
-];
-
 export default function ToolsPage() {
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -44,7 +37,7 @@ export default function ToolsPage() {
   return (
     <main className={styles.main}>
       <ParticleBackground />
-      <Navigation items={navItems} />
+      <Navigation />
 
       <section className={styles.hero}>
         <motion.h1
