@@ -1,0 +1,208 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #12121a 0%, #0a0a0f 100%);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.symbol {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(191, 90, 242, 0.3);
+  border-radius: 24px;
+  background: rgba(18, 18, 26, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 40px rgba(191, 90, 242, 0.2),
+    inset 0 0 40px rgba(191, 90, 242, 0.05);
+}
+
+.symbolText {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00d4ff, #bf5af2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(191, 90, 242, 0.5);
+}
+
+.name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.titleContainer {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  color: #00d4ff;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.tagline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.location, .major {
+  color: #aaa;
+}
+
+.dot {
+  color: #bf5af2;
+}
+
+.codeSymbols {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.codeSymbol {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #667EEA;
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.cta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ctaPrimary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #00d4ff, #bf5af2);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.ctaPrimary svg {
+  transform: rotate(90deg);
+}
+
+.ctaSecondary {
+  padding: 0.875rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.ctaSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(191, 90, 242, 0.5);
+}
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, #00d4ff, transparent);
+}
+
+.scrollText {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #666;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .symbol {
+    width: 90px;
+    height: 90px;
+    border-radius: 18px;
+  }
+
+  .symbolText {
+    font-size: 2.2rem;
+  }
+
+  .tagline {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .dot {
+    display: none;
+  }
+
+  .codeSymbols {
+    gap: 1rem;
+  }
+
+  .cta {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .ctaPrimary, .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

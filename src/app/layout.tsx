@@ -4,24 +4,24 @@ import "./globals.css";
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#667EEA',
+  themeColor: '#0a0a0f',
 };
 
 export const metadata: Metadata = {
-  title: "Anonymous Portfolio | Creative Developer",
-  description: "A minimalist portfolio showcasing projects, skills, and tools. Built with cutting-edge web technologies.",
-  keywords: ["portfolio", "developer", "web development", "react", "next.js"],
-  authors: [{ name: "Anonymous" }],
+  title: "badhope | 全栈开发者 & AI时代探索者",
+  description: "badhope - 数据科学与大数据技术专业，全栈开发者，AI时代探索者。专注于前沿技术，开源贡献者。",
+  keywords: ["badhope", "全栈开发", "数据科学", "AI", "Python", "Next.js", "开发者", "开源贡献"],
+  authors: [{ name: "badhope" }],
   openGraph: {
-    title: "Anonymous Portfolio",
-    description: "Creative Developer Portfolio",
+    title: "badhope | 全栈开发者 & AI时代探索者",
+    description: "数据科学与大数据技术专业，全栈开发者，AI时代探索者。",
     type: "website",
-    locale: "en_US",
+    locale: "zh_CN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anonymous Portfolio",
-    description: "Creative Developer Portfolio",
+    title: "badhope | 全栈开发者",
+    description: "AI时代探索者 & 开源贡献者",
   },
   robots: {
     index: true,
@@ -35,19 +35,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
       </head>
       <body className="antialiased">
-        <div id="__next">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );

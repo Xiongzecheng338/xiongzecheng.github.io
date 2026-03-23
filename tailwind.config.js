@@ -1,30 +1,25 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: {
-          white: '#FFFFFF',
-          secondary: '#F8F9FA',
-        },
-        gradient: {
-          start: '#667EEA',
-          mid: '#764BA2',
-          end: '#F093FB',
-        },
-        text: {
-          primary: '#1A1A2E',
-          secondary: '#4A4A68',
-        },
-        accent: {
-          glow: 'rgba(102, 126, 234, 0.15)',
+        background: '#0a0a0f',
+        foreground: '#e0e0e0',
+        neon: {
+          cyan: '#00d4ff',
+          purple: '#bf5af2',
+          pink: '#ff375f',
+          green: '#30d158',
+          orange: '#ff9500',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        space: ['Space Grotesk', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
     },

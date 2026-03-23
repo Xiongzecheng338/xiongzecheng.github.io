@@ -1,0 +1,15 @@
+.pageContainer {
+  min-height: 100vh;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #00d4ff, #bf5af2);
+  z-index: 9998;
+  pointer-events: none;
+  transform-origin: left;
+}
