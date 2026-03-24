@@ -31,7 +31,12 @@ export default function ContactPage() {
     if (isSubmitting || submitted) return;
 
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const mailtoLink = `mailto:x18825407105@outlook.com?subject=${encodeURIComponent(`Contact from ${formData.name} (${formData.email})`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+
+    window.location.href = mailtoLink;
+
+    await new Promise(resolve => setTimeout(resolve, 500));
     setSubmitted(true);
     setIsSubmitting(false);
   };

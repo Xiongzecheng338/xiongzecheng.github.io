@@ -56,20 +56,38 @@ export default function ResumePage() {
             </div>
           </motion.div>
 
-          <motion.button
-            onClick={handlePrint}
-            className={styles.downloadBtn}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/>
-            </svg>
-            <span>{resume.print}</span>
-          </motion.button>
+          <div className={styles.buttonGroup}>
+            <motion.a
+              href="/resume.pdf"
+              download="badhope_resume.pdf"
+              className={styles.downloadBtn}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              <span>{resume.download}</span>
+            </motion.a>
+
+            <motion.button
+              onClick={handlePrint}
+              className={styles.printBtn}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/>
+              </svg>
+              <span>{resume.print}</span>
+            </motion.button>
+          </div>
         </section>
 
         <section className={styles.section}>
@@ -117,7 +135,7 @@ export default function ResumePage() {
               >
                 <h3 className={styles.skillCategory}>{resume.skills.frontend}</h3>
                 <div className={styles.skillTags}>
-                  {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'].map((skill) => (
+                  {resume.skills.frontendTags.map((skill) => (
                     <span key={skill} className={styles.skillTag}>{skill}</span>
                   ))}
                 </div>
@@ -131,7 +149,7 @@ export default function ResumePage() {
               >
                 <h3 className={styles.skillCategory}>{resume.skills.backend}</h3>
                 <div className={styles.skillTags}>
-                  {['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB'].map((skill) => (
+                  {resume.skills.backendTags.map((skill) => (
                     <span key={skill} className={styles.skillTag}>{skill}</span>
                   ))}
                 </div>
@@ -145,7 +163,7 @@ export default function ResumePage() {
               >
                 <h3 className={styles.skillCategory}>{resume.skills.aiTools}</h3>
                 <div className={styles.skillTags}>
-                  {['TensorFlow', 'PyTorch', 'Docker', 'Git', 'Linux'].map((skill) => (
+                  {resume.skills.aiToolsTags.map((skill) => (
                     <span key={skill} className={styles.skillTag}>{skill}</span>
                   ))}
                 </div>

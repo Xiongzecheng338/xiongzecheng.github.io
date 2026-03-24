@@ -136,6 +136,16 @@ export default function Loader({ onComplete }: LoaderProps) {
         transition={{ duration: 0.8, ease: 'easeOut' }}
       />
 
+      <motion.button
+        className={styles.skipButton}
+        onClick={onComplete}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        {t.loader.skip || '跳过'}
+      </motion.button>
+
       <motion.div
         className={styles.decorLine}
         initial={{ scaleX: 0 }}

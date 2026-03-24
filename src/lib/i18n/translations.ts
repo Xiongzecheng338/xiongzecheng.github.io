@@ -128,6 +128,9 @@ export interface ResumeTranslations {
     frontend: string;
     backend: string;
     aiTools: string;
+    frontendTags: string[];
+    backendTags: string[];
+    aiToolsTags: string[];
   };
   experience: {
     title: string;
@@ -247,6 +250,7 @@ export interface SkillBookTranslations {
 
 export interface LoaderTranslations {
   taglines: string[];
+  skip: string;
 }
 
 export interface ErrorBoundaryTranslations {
@@ -427,6 +431,9 @@ export const en: Translations = {
       frontend: 'Frontend',
       backend: 'Backend',
       aiTools: 'AI & Tools',
+      frontendTags: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+      backendTags: ['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB'],
+      aiToolsTags: ['TensorFlow', 'PyTorch', 'Docker', 'Git', 'Linux'],
     },
     experience: [
       {
@@ -573,6 +580,7 @@ export const en: Translations = {
   },
   loader: {
     taglines: ['Full-Stack Developer', 'AI Era Explorer', 'Code Creator'],
+    skip: 'Skip',
   },
   errorBoundary: {
     title: 'Oops! Something went wrong',
@@ -715,6 +723,9 @@ export const zh: Translations = {
       frontend: '前端',
       backend: '后端',
       aiTools: 'AI与工具',
+      frontendTags: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+      backendTags: ['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB'],
+      aiToolsTags: ['TensorFlow', 'PyTorch', 'Docker', 'Git', 'Linux'],
     },
     experience: [
       {
@@ -861,6 +872,7 @@ export const zh: Translations = {
   },
   loader: {
     taglines: ['全栈开发者', 'AI时代探索者', '代码创造者'],
+    skip: '跳过',
   },
   errorBoundary: {
     title: '出错了！',
